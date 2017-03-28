@@ -1,0 +1,6 @@
+*~
+.doit.db
+/output
+/cache
+__pycache__
+nikolaserve.pid
