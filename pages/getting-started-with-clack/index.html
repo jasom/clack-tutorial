@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting started with clack | Clack Tutorial</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://jasom.githubio/clack-tutorial/pages/getting-started-with-clack/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Jason Miller">
+<meta property="og:site_name" content="Clack Tutorial">
+<meta property="og:title" content="Getting started with clack">
+<meta property="og:url" content="https://jasom.githubio/clack-tutorial/pages/getting-started-with-clack/">
+<meta property="og:description" content="Clack is a very simple framework for unifying the different lisp web
+application servers.  However there isn't a lot of documentation for
+it.  This page hopes to address this.
+
+
+
+Annotated examples of">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2017-03-26T23:36:28-07:00">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://jasom.githubio/clack-tutorial/">
+
+                <span id="blog-title">Clack Tutorial</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../../categories/">Tags</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.org" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text storypage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Getting started with clack</a></h1>
+
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p>
+Clack is a very simple framework for unifying the different lisp web
+application servers.  However there isn't a lot of documentation for
+it.  This page hopes to address this.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Annotated examples of usage</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Formatting</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+All input and output are presented in monospaced preformatted blocks.
+The color indicates what sort they are:
+</p>
+
+<div class="highlight lisp"><pre><span></span><span class="s">"Lisp code has a gray background; it can be typed at the REPL"</span>
+</pre></div>
+
+<div class="highlight sh"><pre><span></span>: shell code has a green background, it can be typed at a shell prompt
+</pre></div>
+
+<pre class="example">
+Output from running commands has a yellow background; do not type this
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Load dependencies used in examples:</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nv">ql:quickload</span> <span class="o">'</span><span class="p">(</span><span class="nv">clack</span> <span class="nv">alexandria</span> <span class="nv">optima</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">use-package</span> <span class="ss">:optima</span><span class="p">)</span>
+</pre></div>
+
+<pre class="example">
+To load "clack":
+  Load 1 ASDF system:
+    clack
+; Loading "clack"
+...
+To load "alexandria":
+  Load 1 ASDF system:
+    alexandria
+; Loading "alexandria"
+
+To load "optima":
+  Load 1 ASDF system:
+    optima
+; Loading "optima"
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Start a simple server</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+The only required argument for <code>clackup</code> is the application; the
+simplest form of the application is a function of one argument.
+</p>
+
+<p>
+The function should retun a list of the form (<i>http-response-code</i> <i>http-headers-alist</i> <i>&amp;optional</i> <i>body</i>)
+</p>
+
+<p>
+<i>body</i> can be a vector of <code>(unsigned-byte 8)</code>, a pathname, or a list of strings.
+</p>
+
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*clack-server*</span> <span class="p">(</span><span class="nv">clack:clackup</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
+					 <span class="o">'</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="s">"Hello, World!"</span><span class="p">)))))</span>
+</pre></div>
+
+<pre class="example">
+Hunchentoot server is started.
+Listening on localhost:5000.
+</pre>
+
+
+<p>
+Let's test it with curl:
+</p>
+
+<div class="highlight sh"><pre><span></span>curl -s http://localhost:5000
+</pre></div>
+
+<pre class="example">
+Hello, World!
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">Stop the server</h3>
+<div class="outline-text-3" id="text-1-4">
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nv">clack:stop</span> <span class="vg">*clack-server*</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">Redefining the handler</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+It's a bit of a pain to have to restart the server all the time, let's make a redefinable handler:
+</p>
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span> <span class="nv">handler</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span> <span class="o">'</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="s">"Hello World, redefinable!"</span><span class="p">)))</span>
+</pre></div>
+
+<p>
+And start the server; we call the function by name to allow redefinition
+</p>
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*clack-server*</span>
+  <span class="p">(</span><span class="nv">clack:clackup</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span> <span class="p">(</span><span class="nb">funcall</span> <span class="ss">'handler</span> <span class="nv">env</span><span class="p">))))</span>
+</pre></div>
+
+<pre class="example">
+Hunchentoot server is started.
+Listening on localhost:5000.
+</pre>
+
+<p>
+Check that it works…
+</p>
+<div class="highlight sh"><pre><span></span>curl -s http://localhost:5000
+</pre></div>
+
+<pre class="example">
+Hello World, redefinable!
+</pre>
+
+<p>
+Now let's redefine it and take a look at what is in the environment:
+</p>
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span> <span class="nv">handler</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
+  <span class="o">`</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">prin1-to-string</span> <span class="nv">env</span><span class="p">))))</span>
+</pre></div>
+
+<p>
+View results…
+</p>
+<div class="highlight sh"><pre><span></span>curl -s http://localhost:5000
+</pre></div>
+
+<pre class="example">
+(:REQUEST-METHOD :GET :SCRIPT-NAME "" :PATH-INFO "/" :SERVER-NAME "localhost"
+ :SERVER-PORT 5000 :SERVER-PROTOCOL :HTTP/1.1 :REQUEST-URI "/" :URL-SCHEME
+ "http" :REMOTE-ADDR "127.0.0.1" :REMOTE-PORT 53824 :QUERY-STRING NIL :RAW-BODY
+ #&lt;FLEXI-STREAMS:FLEXI-IO-STREAM {1021B536E3}&gt; :CONTENT-LENGTH NIL
+ :CONTENT-TYPE NIL :CLACK.STREAMING T :CLACK.IO
+ #&lt;CLACK.HANDLER.HUNCHENTOOT::CLIENT {1021B537F3}&gt; :HEADERS
+ #&lt;HASH-TABLE :TEST EQUAL :COUNT 3 {1021B53C13}&gt;)
+</pre>
+
+<p>
+This is the core part of clack; the environment plist.
+</p>
+
+<p>
+Documentation for it is available <a href="http://quickdocs.org/lack/#the-environment">on quickdocs.</a>
+</p>
+
+<p>
+The fact that it is a plist means capturing values of interest can be done with <code>destructuring-bind</code>:
+</p>
+
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span> <span class="nv">handler</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">destructuring-bind</span> <span class="p">(</span><span class="k">&amp;key</span> <span class="nv">request-method</span> <span class="nv">path-info</span> <span class="nv">request-uri</span>
+			    <span class="nv">query-string</span> <span class="nv">headers</span> <span class="k">&amp;allow-other-keys</span><span class="p">)</span>
+      <span class="nv">env</span>
+    <span class="o">`</span><span class="p">(</span><span class="mi">200</span>
+      <span class="no">nil</span>
+      <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">"Method: ~S Path: ~S URI: ~A Query: ~S~%Headers: ~S"</span>
+		<span class="nv">request-method</span> <span class="nv">path-info</span> <span class="nv">request-uri</span> <span class="nv">query-string</span>
+		<span class="p">(</span><span class="nv">alexandria:hash-table-alist</span> <span class="nv">headers</span><span class="p">))))))</span>
+</pre></div>
+
+<div class="highlight sh"><pre><span></span>curl -s http://localhost:5000
+</pre></div>
+
+<pre class="example">
+Method: :GET Path: "/" URI: / Query: NIL
+Headers: (("accept" . "*/*") ("user-agent" . "curl/7.53.0")
+          ("host" . "localhost:5000"))
+</pre>
+
+<p>
+Optima can be useful too:
+</p>
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span> <span class="nv">handler</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">optima:match</span> <span class="nv">env</span>
+    <span class="p">((</span><span class="nv">guard</span> <span class="p">(</span><span class="nv">property</span> <span class="ss">:path-info</span> <span class="nv">path</span><span class="p">)</span>
+	    <span class="p">(</span><span class="nv">alexandria:starts-with-subseq</span> <span class="s">"/foo/"</span> <span class="nv">path</span><span class="p">))</span>
+     <span class="o">`</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">"The path '~A' is in /foo/~%"</span> <span class="nv">path</span><span class="p">))))</span>
+    <span class="p">((</span><span class="nv">guard</span> <span class="p">(</span><span class="nv">property</span> <span class="ss">:path-info</span> <span class="nv">path</span><span class="p">)</span>
+	    <span class="p">(</span><span class="nv">alexandria:starts-with-subseq</span> <span class="s">"/bar/"</span> <span class="nv">path</span><span class="p">))</span>
+     <span class="o">`</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">"The path '~A' is in /bar/~%"</span> <span class="nv">path</span><span class="p">))))</span>
+    <span class="p">((</span><span class="nv">property</span> <span class="ss">:path-info</span> <span class="nv">path</span><span class="p">)</span>
+     <span class="o">`</span><span class="p">(</span><span class="mi">404</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">"Path ~A not found~%"</span> <span class="nv">path</span><span class="p">))))))</span>
+</pre></div>
+
+<div class="highlight sh"><pre><span></span>curl -s http://localhost:5000/foo/quux
+curl -s http://localhost:5000/bar/quux
+curl -s http://localhost:5000/baz/quux
+</pre></div>
+
+<pre class="example">
+The path '/foo/quux' is in /foo/
+The path '/bar/quux' is in /bar/
+Path /baz/quux not found
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Public API</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">CLACK:CLACKUP</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1">Syntax:</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+<b>clackup</b> <i>app</i> <i>&amp;key</i> <i>server</i> <i>port</i> <i>debug</i> <i>silent</i>
+<i>use-thread</i> <i>use-default-middlewares</i> <i>&amp;allow-other-keys</i>
+</p>
+
+
+<p>
+=&gt; <i>handler</i>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2">Arguments and Values:</h4>
+<div class="outline-text-4" id="text-2-1-2">
+</div>
+<ul class="org-ul">
+<li>
+<a id="sec-2-1-2-1" name="sec-2-1-2-1"></a><i>app</i>–A <i>designator</i> for a <i>function</i> of one argument;or a subclass of <code>lack.component:lack-component</code>;or a <i>pathname</i>; or a <i>string</i>.<br>
+</li>
+
+<li>
+<a id="sec-2-1-2-2" name="sec-2-1-2-2"></a><i>server</i>–A symbol.  The default is <code>:hunchentoot</code><br>
+</li>
+
+<li>
+<a id="sec-2-1-2-3" name="sec-2-1-2-3"></a><i>port</i>–An integer.  The default is 5000<br>
+</li>
+
+<li>
+<a id="sec-2-1-2-4" name="sec-2-1-2-4"></a><i>debug</i>–A boolean.  The default is <code>t</code><br>
+</li>
+
+<li>
+<a id="sec-2-1-2-5" name="sec-2-1-2-5"></a><i>silent</i>–A boolean.  The default is <code>nil</code><br>
+</li>
+
+<li>
+<a id="sec-2-1-2-6" name="sec-2-1-2-6"></a><i>use-thread</i>–A boolean.  The default is <code>t</code> on systems that support threading and <code>nil</code> otherwise.<br>
+</li>
+
+<li>
+<a id="sec-2-1-2-7" name="sec-2-1-2-7"></a><i>use-default-middlewares</i>–A boolean.  The default is <code>t</code><br>
+</li>
+
+<li>
+<a id="sec-2-1-2-8" name="sec-2-1-2-8"></a><i>handler</i>–A clack.handler::handler.<br>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1-3" class="outline-4">
+<h4 id="sec-2-1-3">Description:</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p>
+<code>clackup</code> starts a server using the backend designated by <i>server</i> on
+port <i>port</i>.
+</p>
+
+<p>
+<i>app</i> is used to build the handler chain for the server as follows:
+</p>
+<ul class="org-ul">
+<li>If <i>app</i> is a function then it will be used directly, and called on each request with the requst environment as its only parameter
+</li>
+<li>If <i>app</i> is a subclass of <code>lack.component:lack-component</code> then (lack.component:call <i>app</i> <i>environment</i>) will be called on every request
+</li>
+<li>If <i>app</i> is a pathname then it will be treated as a lisp file to be evaluated.  The result of the last form of the file will be used as above
+</li>
+<li>If <i>app</i> is a string, then it will be coerced to a pathname and used as above.
+</li>
+<li>If <i>use-default-middlewares</i> is <i>true</i> then <i>app</i> will be wrapped by the default middlewares
+</li>
+</ul>
+<p>
+<i>server</i> designates the backend to use; if the backend is not found,
+then <code>clackup</code> will attempt to load it via <code>quicklisp</code> or <code>asdf</code>.
+</p>
+
+<p>
+<i>port</i> specifies which port to listen on.
+</p>
+
+<p>
+<i>debug</i> specifies that debug mode is on.  The results of this is
+backend specific, but typically will handle all errors in the body of
+<i>app</i> by returning a 500 response to the user if <i>false</i>
+</p>
+
+<p>
+<i>silent</i> Suppresses printing of status messages.
+</p>
+
+<p>
+<i>use-thread</i> If <i>true</i>, the backend is launched in a separate thread.
+</p>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    
+
+</article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2017         <a href="mailto:jasom@fastmail.com">Jason Miller</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

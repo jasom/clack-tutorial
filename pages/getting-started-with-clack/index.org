@@ -1,0 +1,258 @@
+#+BEGIN_COMMENT
+.. title: Getting started with clack
+.. slug: getting-started-with-clack
+.. date: 2017-03-26 23:36:28 UTC-07:00
+.. tags: 
+.. category: 
+.. link: 
+.. description: 
+.. type: text
+#+END_COMMENT
+
+  Clack is a very simple framework for unifying the different lisp web
+  application servers.  However there isn't a lot of documentation for
+  it.  This page hopes to address this.
+
+* Annotated examples of usage
+** Formatting
+All input and output are presented in monospaced preformatted blocks.
+The color indicates what sort they are:
+
+#+BEGIN_SRC lisp :exports code
+"Lisp code has a gray background; it can be typed at the REPL"
+#+END_SRC
+
+#+RESULTS:
+: NIL
+
+#+BEGIN_SRC sh :exports code
+: shell code has a green background, it can be typed at a shell prompt
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC lisp :exports results :results output
+(format t "Output from running commands has a yellow background; do not type this")
+#+END_SRC
+
+#+RESULTS:
+: Output from running commands has a yellow background; do not type this
+
+** Load dependencies used in examples:
+   #+BEGIN_SRC lisp :results output :results replace :session :exports both
+   (ql:quickload '(clack alexandria optima))
+   (use-package :optima)
+   #+END_SRC
+
+   #+RESULTS:
+   #+begin_example
+   To load "clack":
+     Load 1 ASDF system:
+       clack
+   ; Loading "clack"
+   ...
+   To load "alexandria":
+     Load 1 ASDF system:
+       alexandria
+   ; Loading "alexandria"
+
+   To load "optima":
+     Load 1 ASDF system:
+       optima
+   ; Loading "optima"
+
+#+end_example
+
+** Start a simple server
+  
+   The only required argument for ~clackup~ is the application; the
+   simplest form of the application is a function of one argument.
+   
+   The function should retun a list of the form (/http-response-code/ /http-headers-alist/ /&optional/ /body/)
+   
+   /body/ can be a vector of ~(unsigned-byte 8)~, a pathname, or a list of strings.
+
+ #+BEGIN_SRC lisp :session :results output
+(defparameter *clack-server* (clack:clackup (lambda (env)
+                                         '(200 nil ("Hello, World!")))))
+ #+END_SRC
+
+  #+RESULTS:
+  : Hunchentoot server is started.
+  : Listening on localhost:5000.
+
+  
+   Let's test it with curl:
+
+  #+BEGIN_SRC sh :results output :exports both
+   curl -s http://localhost:5000
+  #+END_SRC
+
+  #+RESULTS:
+  : Hello, World!
+
+** Stop the server
+   #+BEGIN_SRC lisp :session :results output
+     (clack:stop *clack-server*)
+   #+END_SRC
+
+   #+RESULTS:
+
+** Redefining the handler
+
+It's a bit of a pain to have to restart the server all the time, let's make a redefinable handler:
+   #+BEGIN_SRC lisp :session :results output
+     (defun handler (env) '(200 nil ("Hello World, redefinable!")))
+   #+END_SRC
+
+   #+RESULTS:
+
+And start the server; we call the function by name to allow redefinition
+  #+BEGIN_SRC lisp :session :results output
+    (defparameter *clack-server*
+      (clack:clackup (lambda (env) (funcall 'handler env))))
+  #+END_SRC
+
+  #+RESULTS:
+  : Hunchentoot server is started.
+  : Listening on localhost:5000.
+
+Check that it works...
+  #+BEGIN_SRC sh :results output :exports both
+   curl -s http://localhost:5000
+  #+END_SRC
+
+  #+RESULTS:
+  : Hello World, redefinable!
+
+Now let's redefine it and take a look at what is in the environment:
+   #+BEGIN_SRC lisp :session :results output
+     (defun handler (env)
+       `(200 nil (,(prin1-to-string env))))
+   #+END_SRC
+
+   #+RESULTS:
+
+View results...
+  #+BEGIN_SRC sh :results output :exports both
+   curl -s http://localhost:5000
+  #+END_SRC
+
+  #+RESULTS:
+  : (:REQUEST-METHOD :GET :SCRIPT-NAME "" :PATH-INFO "/" :SERVER-NAME "localhost"
+  :  :SERVER-PORT 5000 :SERVER-PROTOCOL :HTTP/1.1 :REQUEST-URI "/" :URL-SCHEME
+  :  "http" :REMOTE-ADDR "127.0.0.1" :REMOTE-PORT 53824 :QUERY-STRING NIL :RAW-BODY
+  :  #<FLEXI-STREAMS:FLEXI-IO-STREAM {1021B536E3}> :CONTENT-LENGTH NIL
+  :  :CONTENT-TYPE NIL :CLACK.STREAMING T :CLACK.IO
+  :  #<CLACK.HANDLER.HUNCHENTOOT::CLIENT {1021B537F3}> :HEADERS
+  :  #<HASH-TABLE :TEST EQUAL :COUNT 3 {1021B53C13}>)
+
+This is the core part of clack; the environment plist.
+
+Documentation for it is available [[http://quickdocs.org/lack/#the-environment][on quickdocs.]]
+
+The fact that it is a plist means capturing values of interest can be done with ~destructuring-bind~:
+
+#+BEGIN_SRC lisp :session :results output
+  (defun handler (env)
+    (destructuring-bind (&key request-method path-info request-uri
+                              query-string headers &allow-other-keys)
+        env
+      `(200
+        nil
+        (,(format nil "Method: ~S Path: ~S URI: ~A Query: ~S~%Headers: ~S"
+                  request-method path-info request-uri query-string
+                  (alexandria:hash-table-alist headers))))))
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC sh :results output :exports both
+curl -s http://localhost:5000
+#+END_SRC
+
+#+RESULTS:
+: Method: :GET Path: "/" URI: / Query: NIL
+: Headers: (("accept" . "*/*") ("user-agent" . "curl/7.53.0")
+:           ("host" . "localhost:5000"))
+
+Optima can be useful too:
+#+BEGIN_SRC lisp :session :results output
+  (defun handler (env)
+    (optima:match env
+      ((guard (property :path-info path)
+              (alexandria:starts-with-subseq "/foo/" path))
+       `(200 nil (,(format nil "The path '~A' is in /foo/~%" path))))
+      ((guard (property :path-info path)
+              (alexandria:starts-with-subseq "/bar/" path))
+       `(200 nil (,(format nil "The path '~A' is in /bar/~%" path))))
+      ((property :path-info path)
+       `(404 nil (,(format nil "Path ~A not found~%" path))))))
+#+END_SRC
+
+#+RESULTS:
+
+  #+BEGIN_SRC sh :results output :exports both
+   curl -s http://localhost:5000/foo/quux
+   curl -s http://localhost:5000/bar/quux
+   curl -s http://localhost:5000/baz/quux
+  #+END_SRC
+
+  #+RESULTS:
+  : The path '/foo/quux' is in /foo/
+  : The path '/bar/quux' is in /bar/
+  : Path /baz/quux not found
+
+* Public API
+  
+** CLACK:CLACKUP
+   
+*** Syntax:
+    *clackup* /app/ /&key/ /server/ /port/ /debug/ /silent/
+    /use-thread/ /use-default-middlewares/ /&allow-other-keys/
+    
+ 
+    => /handler/
+*** Arguments and Values:
+
+**** /app/--A /designator/ for a /function/ of one argument;or a subclass of ~lack.component:lack-component~;or a /pathname/; or a /string/.
+
+**** /server/--A symbol.  The default is ~:hunchentoot~
+
+**** /port/--An integer.  The default is 5000
+
+**** /debug/--A boolean.  The default is ~t~
+
+**** /silent/--A boolean.  The default is ~nil~
+
+**** /use-thread/--A boolean.  The default is ~t~ on systems that support threading and ~nil~ otherwise.
+
+**** /use-default-middlewares/--A boolean.  The default is ~t~
+
+**** /handler/--A clack.handler::handler.
+
+*** Description:
+    
+    ~clackup~ starts a server using the backend designated by /server/ on
+    port /port/.
+    
+/app/ is used to build the handler chain for the server as follows:
+- If /app/ is a function then it will be used directly, and called on each request with the requst environment as its only parameter
+- If /app/ is a subclass of ~lack.component:lack-component~ then (lack.component:call /app/ /environment/) will be called on every request
+- If /app/ is a pathname then it will be treated as a lisp file to be evaluated.  The result of the last form of the file will be used as above
+- If /app/ is a string, then it will be coerced to a pathname and used as above.
+- If /use-default-middlewares/ is /true/ then /app/ will be wrapped by the default middlewares
+
+/server/ designates the backend to use; if the backend is not found,
+then ~clackup~ will attempt to load it via ~quicklisp~ or ~asdf~.
+
+/port/ specifies which port to listen on.
+
+/debug/ specifies that debug mode is on.  The results of this is
+backend specific, but typically will handle all errors in the body of
+/app/ by returning a 500 response to the user if /false/
+
+/silent/ Suppresses printing of status messages.
+
+/use-thread/ If /true/, the backend is launched in a separate thread.
+
