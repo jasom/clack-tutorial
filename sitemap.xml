@@ -6,27 +6,19 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
-  <loc>https://jasom.githubio/clack-tutorial/</loc>
-  <lastmod>2017-03-27T06:37:00Z</lastmod>
+  <loc>https://jasom.github.io/clack-tutorial/</loc>
+  <lastmod>2017-09-05T16:48:00Z</lastmod>
  </url>
  <url>
-  <loc>https://jasom.githubio/clack-tutorial/archive.html</loc>
-  <lastmod>2017-03-28T19:53:00Z</lastmod>
+  <loc>https://jasom.github.io/clack-tutorial/archive.html</loc>
+  <lastmod>2017-09-05T16:48:00Z</lastmod>
  </url>
  <url>
-  <loc>https://jasom.githubio/clack-tutorial/categories/</loc>
-  <lastmod>2017-03-27T06:29:00Z</lastmod>
+  <loc>https://jasom.github.io/clack-tutorial/categories/</loc>
+  <lastmod>2017-09-05T16:48:00Z</lastmod>
  </url>
  <url>
-  <loc>https://jasom.githubio/clack-tutorial/galleries/</loc>
-  <lastmod>2017-03-27T06:29:00Z</lastmod>
- </url>
- <url>
-  <loc>https://jasom.githubio/clack-tutorial/listings/</loc>
-  <lastmod>2017-03-27T06:29:00Z</lastmod>
- </url>
- <url>
-  <loc>https://jasom.githubio/clack-tutorial/pages/getting-started-with-clack/</loc>
-  <lastmod>2017-03-27T06:37:00Z</lastmod>
+  <loc>https://jasom.github.io/clack-tutorial/pages/getting-started-with-clack/</loc>
+  <lastmod>2017-09-05T16:48:00Z</lastmod>
  </url>
 </urlset>

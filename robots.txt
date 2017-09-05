@@ -1,4 +1,4 @@
-Sitemap: https://jasom.githubio/clack-tutorial/sitemapindex.xml
+Sitemap: https://jasom.github.io/clack-tutorial/sitemapindex.xml
 
 User-Agent: *
-Host: jasom.githubio
+Host: jasom.github.io
