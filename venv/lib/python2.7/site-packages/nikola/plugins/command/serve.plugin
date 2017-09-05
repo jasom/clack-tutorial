@@ -1,0 +1,13 @@
+[Core]
+name = serve
+module = serve
+
+[Documentation]
+author = Roberto Alsina
+version = 1.0
+website = https://getnikola.com/
+description = Start test server.
+
+[Nikola]
+PluginCategory = Command
+

@@ -1,0 +1,13 @@
+[Core]
+name = new_page
+module = new_page
+
+[Documentation]
+author = Roberto Alsina, Chris Warrick
+version = 1.0
+website = https://getnikola.com/
+description = Create a new page.
+
+[Nikola]
+PluginCategory = Command
+

@@ -1,0 +1,13 @@
+[Core]
+name = create_bundles
+module = bundles
+
+[Documentation]
+author = Roberto Alsina
+version = 1.0
+website = https://getnikola.com/
+description = Theme bundles using WebAssets
+
+[Nikola]
+PluginCategory = Task
+

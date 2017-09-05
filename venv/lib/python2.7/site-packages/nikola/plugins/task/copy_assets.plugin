@@ -1,0 +1,13 @@
+[Core]
+name = copy_assets
+module = copy_assets
+
+[Documentation]
+author = Roberto Alsina
+version = 1.0
+website = https://getnikola.com/
+description = Copy theme assets into output.
+
+[Nikola]
+PluginCategory = Task
+

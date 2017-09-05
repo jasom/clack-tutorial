@@ -1,0 +1,12 @@
+[Core]
+name = rest_youtube
+module = youtube
+
+[Nikola]
+compiler = rest
+PluginCategory = CompilerExtension
+
+[Documentation]
+version = 0.1
+description = Youtube directive
+

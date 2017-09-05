@@ -1,0 +1,13 @@
+[Core]
+name = check
+module = check
+
+[Documentation]
+author = Roberto Alsina
+version = 1.0
+website = https://getnikola.com/
+description = Check the generated site
+
+[Nikola]
+PluginCategory = Command
+

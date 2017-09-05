@@ -1,0 +1,13 @@
+[Core]
+name = render_posts
+module = posts
+
+[Documentation]
+author = Roberto Alsina
+version = 1.0
+website = https://getnikola.com/
+description = Create HTML fragments out of posts.
+
+[Nikola]
+PluginCategory = Task
+

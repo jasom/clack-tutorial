@@ -1,0 +1,13 @@
+[Core]
+name = plugin
+module = plugin
+
+[Documentation]
+author = Roberto Alsina and Chris Warrick
+version = 1.0
+website = https://getnikola.com/
+description = Manage Nikola plugins
+
+[Nikola]
+PluginCategory = Command
+

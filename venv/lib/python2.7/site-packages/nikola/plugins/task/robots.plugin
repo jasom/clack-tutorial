@@ -1,0 +1,13 @@
+[Core]
+name = robots
+module = robots
+
+[Documentation]
+author = Daniel Aleksandersen
+version = 1.0
+website = https://getnikola.com/
+description = Generate /robots.txt exclusion file and promote sitemap.
+
+[Nikola]
+PluginCategory = Task
+
