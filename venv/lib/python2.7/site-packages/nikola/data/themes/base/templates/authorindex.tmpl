@@ -1,8 +1,0 @@
-## -*- coding: utf-8 -*-
-<%inherit file="index.tmpl"/>
-<%namespace name="feeds_translations" file="feeds_translations_helper.tmpl" import="*"/>
-
-<%block name="extra_head">
-    ${parent.extra_head()}
-    ${feeds_translations.head(author)}
-</%block>

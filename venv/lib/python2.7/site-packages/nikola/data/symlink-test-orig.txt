@@ -1,4 +1,0 @@
-NIKOLA_SYMLINKS=OK
-
-This is a test file for symlink detection, used to test compatibility with
-Microsoft Windows.
