@@ -6,11 +6,15 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>https://jasom.github.io/clack-tutorial/galleries/rss.xml</loc>
+  <lastmod>2017-12-02T05:10:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://jasom.github.io/clack-tutorial/rss.xml</loc>
-  <lastmod>2017-09-05T16:48:00Z</lastmod>
+  <lastmod>2017-12-02T05:10:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jasom.github.io/clack-tutorial/sitemap.xml</loc>
-  <lastmod>2017-09-05T16:48:00Z</lastmod>
+  <lastmod>2017-12-02T05:10:00Z</lastmod>
  </sitemap>
 </sitemapindex>

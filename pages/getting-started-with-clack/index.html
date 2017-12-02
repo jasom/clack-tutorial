@@ -4,13 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Getting started with clack | Clack Tutorial</title>
-<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/html4css1.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/nikola_rst.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
@@ -103,7 +97,7 @@ All input and output are presented in monospaced preformatted blocks.
 The color indicates what sort they are:
 </p>
 
-<div class="highlight lisp"><pre><span></span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nb">&gt;</span><span class="s">"Lisp code has a gray background; it can be typed at the REPL"</span><span class="nv">&lt;/span&gt;</span>
+<div class="highlight lisp"><pre><span></span><span class="s">"Lisp code has a gray background; it can be typed at the REPL"</span>
 </pre></div>
 
 <div class="highlight sh"><pre><span></span>: shell code has a green background, it can be typed at a shell prompt
@@ -119,7 +113,7 @@ Output from running commands has a yellow background; do not type this
 <h3 id="sec-1-2">Load dependencies used in examples:</h3>
 <div class="outline-text-3" id="text-1-2">
 <div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nv">ql:quickload</span> <span class="o">'</span><span class="p">(</span><span class="nv">clack</span> <span class="nv">alexandria</span> <span class="nv">optima</span><span class="p">))</span>
-<span class="p">(</span><span class="nb">use-package</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;:optima&lt;/span&gt;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">use-package</span> <span class="ss">:optima</span><span class="p">)</span>
 </pre></div>
 
 <pre class="example">
@@ -157,8 +151,8 @@ The function should retun a list of the form (<i>http-response-code</i> <i>http-
 <i>body</i> can be a vector of <code>(unsigned-byte 8)</code>, a pathname, or a list of strings.
 </p>
 
-<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;defparameter&lt;/span&gt;</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;*clack-server*&lt;/span&gt;</span> <span class="p">(</span><span class="nv">clack:clackup</span> <span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;lambda&lt;/span&gt;</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
-                                         <span class="o">'</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nb">&gt;</span><span class="s">"Hello, World!"</span><span class="nv">&lt;/span&gt;</span><span class="p">)))))</span>
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*clack-server*</span> <span class="p">(</span><span class="nv">clack:clackup</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
+					 <span class="o">'</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="s">"Hello, World!"</span><span class="p">)))))</span>
 </pre></div>
 
 <pre class="example">
@@ -194,14 +188,14 @@ Hello, World!
 <p>
 It's a bit of a pain to have to restart the server all the time, let's make a redefinable handler:
 </p>
-<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;defun&lt;/span&gt;</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;handler&lt;/span&gt;</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span> <span class="o">'</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nb">&gt;</span><span class="s">"Hello World, redefinable!"</span><span class="nv">&lt;/span&gt;</span><span class="p">)))</span>
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span> <span class="nv">handler</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span> <span class="o">'</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="s">"Hello World, redefinable!"</span><span class="p">)))</span>
 </pre></div>
 
 <p>
 And start the server; we call the function by name to allow redefinition
 </p>
-<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;defparameter&lt;/span&gt;</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; font-style: italic;"</span><span class="nv">&gt;*clack-server*&lt;/span&gt;</span>
-  <span class="p">(</span><span class="nv">clack:clackup</span> <span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;lambda&lt;/span&gt;</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span> <span class="p">(</span><span class="nb">funcall</span> <span class="ss">'handler</span> <span class="nv">env</span><span class="p">))))</span>
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*clack-server*</span>
+  <span class="p">(</span><span class="nv">clack:clackup</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span> <span class="p">(</span><span class="nb">funcall</span> <span class="ss">'handler</span> <span class="nv">env</span><span class="p">))))</span>
 </pre></div>
 
 <pre class="example">
@@ -222,7 +216,7 @@ Hello World, redefinable!
 <p>
 Now let's redefine it and take a look at what is in the environment:
 </p>
-<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;defun&lt;/span&gt;</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;handler&lt;/span&gt;</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span> <span class="nv">handler</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
   <span class="o">`</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">prin1-to-string</span> <span class="nv">env</span><span class="p">))))</span>
 </pre></div>
 
@@ -254,15 +248,15 @@ Documentation for it is available <a href="http://quickdocs.org/lack/#the-enviro
 The fact that it is a plist means capturing values of interest can be done with <code>destructuring-bind</code>:
 </p>
 
-<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;defun&lt;/span&gt;</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;handler&lt;/span&gt;</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
-  <span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;destructuring-bind&lt;/span&gt;</span> <span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; text-decoration: underline;"</span><span class="nv">&gt;&amp;key&lt;/span&gt;</span> <span class="nv">request-method</span> <span class="nv">path-info</span> <span class="nv">request-uri</span>
-                            <span class="nv">query-string</span> <span class="nv">headers</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold; text-decoration: underline;"</span><span class="nv">&gt;&amp;allow-other-keys&lt;/span&gt;</span><span class="p">)</span>
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span> <span class="nv">handler</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">destructuring-bind</span> <span class="p">(</span><span class="k">&amp;key</span> <span class="nv">request-method</span> <span class="nv">path-info</span> <span class="nv">request-uri</span>
+			    <span class="nv">query-string</span> <span class="nv">headers</span> <span class="k">&amp;allow-other-keys</span><span class="p">)</span>
       <span class="nv">env</span>
     <span class="o">`</span><span class="p">(</span><span class="mi">200</span>
       <span class="no">nil</span>
-      <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nb">&gt;</span><span class="s">"Method: ~S Path: ~S URI: ~A Query: ~S~%Headers: ~S"</span><span class="nv">&lt;/span&gt;</span>
-                <span class="nv">request-method</span> <span class="nv">path-info</span> <span class="nv">request-uri</span> <span class="nv">query-string</span>
-                <span class="p">(</span><span class="nv">alexandria:hash-table-alist</span> <span class="nv">headers</span><span class="p">))))))</span>
+      <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">"Method: ~S Path: ~S URI: ~A Query: ~S~%Headers: ~S"</span>
+		<span class="nv">request-method</span> <span class="nv">path-info</span> <span class="nv">request-uri</span> <span class="nv">query-string</span>
+		<span class="p">(</span><span class="nv">alexandria:hash-table-alist</span> <span class="nv">headers</span><span class="p">))))))</span>
 </pre></div>
 
 <div class="highlight sh"><pre><span></span>curl -s http://localhost:5000
@@ -277,16 +271,16 @@ Headers: (("accept" . "*/*") ("user-agent" . "curl/7.53.0")
 <p>
 Optima can be useful too:
 </p>
-<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;defun&lt;/span&gt;</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;handler&lt;/span&gt;</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
+<div class="highlight lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span> <span class="nv">handler</span> <span class="p">(</span><span class="nv">env</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">optima:match</span> <span class="nv">env</span>
-    <span class="p">((</span><span class="nv">guard</span> <span class="p">(</span><span class="nv">property</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;:path-info&lt;/span&gt;</span> <span class="nv">path</span><span class="p">)</span>
-            <span class="p">(</span><span class="nv">alexandria:starts-with-subseq</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nb">&gt;</span><span class="s">"/foo/"</span><span class="nv">&lt;/span&gt;</span> <span class="nv">path</span><span class="p">))</span>
-     <span class="o">`</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nb">&gt;</span><span class="s">"The path '~A' is in /foo/~%"</span><span class="nv">&lt;/span&gt;</span> <span class="nv">path</span><span class="p">))))</span>
-    <span class="p">((</span><span class="nv">guard</span> <span class="p">(</span><span class="nv">property</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;:path-info&lt;/span&gt;</span> <span class="nv">path</span><span class="p">)</span>
-            <span class="p">(</span><span class="nv">alexandria:starts-with-subseq</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nb">&gt;</span><span class="s">"/bar/"</span><span class="nv">&lt;/span&gt;</span> <span class="nv">path</span><span class="p">))</span>
-     <span class="o">`</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nb">&gt;</span><span class="s">"The path '~A' is in /bar/~%"</span><span class="nv">&lt;/span&gt;</span> <span class="nv">path</span><span class="p">))))</span>
-    <span class="p">((</span><span class="nv">property</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-weight: bold;"</span><span class="nv">&gt;:path-info&lt;/span&gt;</span> <span class="nv">path</span><span class="p">)</span>
-     <span class="o">`</span><span class="p">(</span><span class="mi">404</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="nv">&lt;span</span> <span class="nv">style=</span><span class="s">"font-style: italic;"</span><span class="nb">&gt;</span><span class="s">"Path ~A not found~%"</span><span class="nv">&lt;/span&gt;</span> <span class="nv">path</span><span class="p">))))))</span>
+    <span class="p">((</span><span class="nv">guard</span> <span class="p">(</span><span class="nv">property</span> <span class="ss">:path-info</span> <span class="nv">path</span><span class="p">)</span>
+	    <span class="p">(</span><span class="nv">alexandria:starts-with-subseq</span> <span class="s">"/foo/"</span> <span class="nv">path</span><span class="p">))</span>
+     <span class="o">`</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">"The path '~A' is in /foo/~%"</span> <span class="nv">path</span><span class="p">))))</span>
+    <span class="p">((</span><span class="nv">guard</span> <span class="p">(</span><span class="nv">property</span> <span class="ss">:path-info</span> <span class="nv">path</span><span class="p">)</span>
+	    <span class="p">(</span><span class="nv">alexandria:starts-with-subseq</span> <span class="s">"/bar/"</span> <span class="nv">path</span><span class="p">))</span>
+     <span class="o">`</span><span class="p">(</span><span class="mi">200</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">"The path '~A' is in /bar/~%"</span> <span class="nv">path</span><span class="p">))))</span>
+    <span class="p">((</span><span class="nv">property</span> <span class="ss">:path-info</span> <span class="nv">path</span><span class="p">)</span>
+     <span class="o">`</span><span class="p">(</span><span class="mi">404</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">"Path ~A not found~%"</span> <span class="nv">path</span><span class="p">))))))</span>
 </pre></div>
 
 <div class="highlight sh"><pre><span></span>curl -s http://localhost:5000/foo/quux
@@ -428,7 +422,7 @@ backend specific, but typically will handle all errors in the body of
 </div>
 
 
-            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+            <script src="../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("en");
     fancydates(0, "YYYY-MM-DD HH:mm");
     </script><!-- end fancy dates -->
