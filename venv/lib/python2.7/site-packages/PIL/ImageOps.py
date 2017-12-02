@@ -21,6 +21,7 @@ from . import Image
 from ._util import isStringType
 import operator
 import functools
+import warnings
 
 
 #
@@ -184,6 +185,7 @@ def scale(image, factor, resample=Image.NEAREST):
     A factor greater than 1 expands the image, between 0 and 1 contracts the
     image.
 
+    :param image: The image to rescale.
     :param factor: The expansion factor, as a float.
     :param resample: An optional resampling filter. Same values possible as
        in the PIL.Image.resize function.
@@ -270,6 +272,7 @@ def fit(image, size, method=Image.NEAREST, bleed=0.0, centering=(0.5, 0.5)):
 
     This function was contributed by Kevin Cazabon.
 
+    :param image: The image to size and crop.
     :param size: The requested output size in pixels, given as a
                  (width, height) tuple.
     :param method: What resampling method to use. Default is
@@ -437,6 +440,13 @@ def solarize(image, threshold=128):
 def gaussian_blur(im, radius=None):
     """ PIL_usm.gblur(im, [radius])"""
 
+    warnings.warn(
+        'PIL.ImageOps.gaussian_blur is deprecated. '
+        'Use PIL.ImageFilter.GaussianBlur instead. '
+        'This function will be removed in a future version.',
+        DeprecationWarning
+    )
+
     if radius is None:
         radius = 5.0
 
@@ -444,11 +454,29 @@ def gaussian_blur(im, radius=None):
 
     return im.im.gaussian_blur(radius)
 
-gblur = gaussian_blur
+
+def gblur(im, radius=None):
+    """ PIL_usm.gblur(im, [radius])"""
+
+    warnings.warn(
+        'PIL.ImageOps.gblur is deprecated. '
+        'Use PIL.ImageFilter.GaussianBlur instead. '
+        'This function will be removed in a future version.',
+        DeprecationWarning
+    )
+
+    return gaussian_blur(im, radius)
 
 
 def unsharp_mask(im, radius=None, percent=None, threshold=None):
     """ PIL_usm.usm(im, [radius, percent, threshold])"""
+
+    warnings.warn(
+        'PIL.ImageOps.unsharp_mask is deprecated. '
+        'Use PIL.ImageFilter.UnsharpMask instead. '
+        'This function will be removed in a future version.',
+        DeprecationWarning
+    )
 
     if radius is None:
         radius = 5.0
@@ -461,7 +489,18 @@ def unsharp_mask(im, radius=None, percent=None, threshold=None):
 
     return im.im.unsharp_mask(radius, percent, threshold)
 
-usm = unsharp_mask
+
+def usm(im, radius=None, percent=None, threshold=None):
+    """ PIL_usm.usm(im, [radius, percent, threshold])"""
+
+    warnings.warn(
+        'PIL.ImageOps.usm is deprecated. '
+        'Use PIL.ImageFilter.UnsharpMask instead. '
+        'This function will be removed in a future version.',
+        DeprecationWarning
+    )
+
+    return unsharp_mask(im, radius, percent, threshold)
 
 
 def box_blur(image, radius):
@@ -478,6 +517,13 @@ def box_blur(image, radius):
                    in each direction, i.e. 9 pixels in total.
     :return: An image.
     """
+    warnings.warn(
+        'PIL.ImageOps.box_blur is deprecated. '
+        'Use PIL.ImageFilter.BoxBlur instead. '
+        'This function will be removed in a future version.',
+        DeprecationWarning
+    )
+
     image.load()
 
     return image._new(image.im.box_blur(radius))

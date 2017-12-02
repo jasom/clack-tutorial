@@ -1,4 +1,4 @@
-#!/export/jmiller/home/gh/clack-tutorial/venv/bin/python2.7
+#!/home/aidenn/gh/clack-tutorial/venv/bin/python2.7
 
 # $Id: rst2html4.py 7994 2016-12-10 17:41:45Z milde $
 # Author: David Goodger <goodger@python.org>

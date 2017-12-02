@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/export/jmiller/home/gh/clack-tutorial/venv"
+set -gx VIRTUAL_ENV "/home/aidenn/gh/clack-tutorial/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

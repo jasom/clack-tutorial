@@ -1,4 +1,4 @@
-#!/export/jmiller/home/gh/clack-tutorial/venv/bin/python2.7
+#!/home/aidenn/gh/clack-tutorial/venv/bin/python2.7
 """PILdriver, an image-processing calculator using PIL.
 
 An instance of class PILDriver is essentially a software stack machine

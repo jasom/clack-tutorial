@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/export/jmiller/home/gh/clack-tutorial/venv"
+VIRTUAL_ENV="/home/aidenn/gh/clack-tutorial/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

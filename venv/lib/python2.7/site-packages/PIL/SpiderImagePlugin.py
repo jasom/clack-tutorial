@@ -174,8 +174,8 @@ class SpiderImageFile(ImageFile.ImageFile):
     def seek(self, frame):
         if self.istack == 0:
             raise EOFError("attempt to seek in a non-stack file")
-        if frame >= self._nimages:
-            raise EOFError("attempt to seek past end of file")
+        if not self._seek_check(frame):
+            return
         self.stkoffset = self.hdrlen + frame * (self.hdrlen + self.imgbytes)
         self.fp = self.__fp
         self.fp.seek(self.stkoffset)
@@ -267,16 +267,10 @@ def _save(im, fp, filename):
         raise IOError("Error creating Spider header")
 
     # write the SPIDER header
-    try:
-        fp = open(filename, 'wb')
-    except:
-        raise IOError("Unable to open %s for writing" % filename)
     fp.writelines(hdr)
 
     rawmode = "F;32NF"  # 32-bit native floating point
     ImageFile._save(im, fp, [("raw", (0, 0)+im.size, 0, (rawmode, 0, 1))])
-
-    fp.close()
 
 
 def _save_spider(im, fp, filename):

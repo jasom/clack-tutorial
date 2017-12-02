@@ -49,8 +49,7 @@ class PyAccess(object):
         self.image8 = ffi.cast('unsigned char **', vals['image8'])
         self.image32 = ffi.cast('int **', vals['image32'])
         self.image = ffi.cast('unsigned char **', vals['image'])
-        self.xsize = vals['xsize']
-        self.ysize = vals['ysize']
+        self.xsize, self.ysize = img.im.size
 
         # Keep pointer to im object to prevent dereferencing.
         self._im = img.im
@@ -70,7 +69,7 @@ class PyAccess(object):
         multi-band images
 
         :param xy: The pixel coordinate, given as (x, y).
-        :param value: The pixel value.
+        :param color: The pixel value.
         """
         if self.readonly:
             raise ValueError('Attempt to putpixel a read only image')
@@ -133,6 +132,7 @@ class _PyAccess32_3(PyAccess):
         pixel.r = min(color[0], 255)
         pixel.g = min(color[1], 255)
         pixel.b = min(color[2], 255)
+        pixel.a = 255
 
 
 class _PyAccess32_4(PyAccess):

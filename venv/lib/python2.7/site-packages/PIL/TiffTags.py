@@ -23,7 +23,7 @@ from collections import namedtuple
 class TagInfo(namedtuple("_TagInfo", "value name type length enum")):
     __slots__ = []
 
-    def __new__(cls, value=None, name="unknown", type=None, length=0, enum=None):
+    def __new__(cls, value=None, name="unknown", type=None, length=None, enum=None):
         return super(TagInfo, cls).__new__(
             cls, value, name, type, length, enum or {})
 
@@ -142,6 +142,8 @@ TAGS_V2 = {
     341: ("SMaxSampleValue", DOUBLE, 0),
     342: ("TransferRange", SHORT, 6),
 
+    347: ("JPEGTables", UNDEFINED, 1),
+    
     # obsolete JPEG tags
     512: ("JPEGProc", SHORT, 1),
     513: ("JPEGInterchangeFormat", LONG, 1),
@@ -158,7 +160,10 @@ TAGS_V2 = {
     531: ("YCbCrPositioning", SHORT, 1),
     532: ("ReferenceBlackWhite", LONG, 0),
 
+    700: ('XMP', BYTE, 1),
+    
     33432: ("Copyright", ASCII, 1),
+    34377: ('PhotoshopInfo', BYTE, 1),
 
     # FIXME add more tags here
     34665: ("ExifIFD", SHORT, 1),
@@ -188,8 +193,8 @@ TAGS_V2 = {
 
     50741: ("MakerNoteSafety", SHORT, 1, {"Unsafe": 0, "Safe": 1}),
     50780: ("BestQualityScale", RATIONAL, 1),
-    50838: ("ImageJMetaDataByteCounts", LONG, 1),
-    50839: ("ImageJMetaData", UNDEFINED, 1)
+    50838: ("ImageJMetaDataByteCounts", LONG, 0), # Can be more than one 
+    50839: ("ImageJMetaData", UNDEFINED, 1)       # see Issue #2006
 }
 
 # Legacy Tags structure
@@ -377,44 +382,44 @@ TYPES = {}
 # adding to the custom dictionary. From tif_dir.c, searching for
 # case TIFFTAG in the _TIFFVSetField function:
 # Line: item.
-# 148:	case TIFFTAG_SUBFILETYPE:
-# 151:	case TIFFTAG_IMAGEWIDTH:
-# 154:	case TIFFTAG_IMAGELENGTH:
-# 157:	case TIFFTAG_BITSPERSAMPLE:
-# 181:	case TIFFTAG_COMPRESSION:
-# 202:	case TIFFTAG_PHOTOMETRIC:
-# 205:	case TIFFTAG_THRESHHOLDING:
-# 208:	case TIFFTAG_FILLORDER:
-# 214:	case TIFFTAG_ORIENTATION:
-# 221:	case TIFFTAG_SAMPLESPERPIXEL:
-# 228:	case TIFFTAG_ROWSPERSTRIP:
-# 238:	case TIFFTAG_MINSAMPLEVALUE:
-# 241:	case TIFFTAG_MAXSAMPLEVALUE:
-# 244:	case TIFFTAG_SMINSAMPLEVALUE:
-# 247:	case TIFFTAG_SMAXSAMPLEVALUE:
-# 250:	case TIFFTAG_XRESOLUTION:
-# 256:	case TIFFTAG_YRESOLUTION:
-# 262:	case TIFFTAG_PLANARCONFIG:
-# 268:	case TIFFTAG_XPOSITION:
-# 271:	case TIFFTAG_YPOSITION:
-# 274:	case TIFFTAG_RESOLUTIONUNIT:
-# 280:	case TIFFTAG_PAGENUMBER:
-# 284:	case TIFFTAG_HALFTONEHINTS:
-# 288:	case TIFFTAG_COLORMAP:
-# 294:	case TIFFTAG_EXTRASAMPLES:
-# 298:	case TIFFTAG_MATTEING:
-# 305:	case TIFFTAG_TILEWIDTH:
-# 316:	case TIFFTAG_TILELENGTH:
-# 327:	case TIFFTAG_TILEDEPTH:
-# 333:	case TIFFTAG_DATATYPE:
-# 344:	case TIFFTAG_SAMPLEFORMAT:
-# 361:	case TIFFTAG_IMAGEDEPTH:
-# 364:	case TIFFTAG_SUBIFD:
-# 376:	case TIFFTAG_YCBCRPOSITIONING:
-# 379:	case TIFFTAG_YCBCRSUBSAMPLING:
-# 383:	case TIFFTAG_TRANSFERFUNCTION:
-# 389:	case TIFFTAG_REFERENCEBLACKWHITE:
-# 393:	case TIFFTAG_INKNAMES:
+# 148: case TIFFTAG_SUBFILETYPE:
+# 151: case TIFFTAG_IMAGEWIDTH:
+# 154: case TIFFTAG_IMAGELENGTH:
+# 157: case TIFFTAG_BITSPERSAMPLE:
+# 181: case TIFFTAG_COMPRESSION:
+# 202: case TIFFTAG_PHOTOMETRIC:
+# 205: case TIFFTAG_THRESHHOLDING:
+# 208: case TIFFTAG_FILLORDER:
+# 214: case TIFFTAG_ORIENTATION:
+# 221: case TIFFTAG_SAMPLESPERPIXEL:
+# 228: case TIFFTAG_ROWSPERSTRIP:
+# 238: case TIFFTAG_MINSAMPLEVALUE:
+# 241: case TIFFTAG_MAXSAMPLEVALUE:
+# 244: case TIFFTAG_SMINSAMPLEVALUE:
+# 247: case TIFFTAG_SMAXSAMPLEVALUE:
+# 250: case TIFFTAG_XRESOLUTION:
+# 256: case TIFFTAG_YRESOLUTION:
+# 262: case TIFFTAG_PLANARCONFIG:
+# 268: case TIFFTAG_XPOSITION:
+# 271: case TIFFTAG_YPOSITION:
+# 274: case TIFFTAG_RESOLUTIONUNIT:
+# 280: case TIFFTAG_PAGENUMBER:
+# 284: case TIFFTAG_HALFTONEHINTS:
+# 288: case TIFFTAG_COLORMAP:
+# 294: case TIFFTAG_EXTRASAMPLES:
+# 298: case TIFFTAG_MATTEING:
+# 305: case TIFFTAG_TILEWIDTH:
+# 316: case TIFFTAG_TILELENGTH:
+# 327: case TIFFTAG_TILEDEPTH:
+# 333: case TIFFTAG_DATATYPE:
+# 344: case TIFFTAG_SAMPLEFORMAT:
+# 361: case TIFFTAG_IMAGEDEPTH:
+# 364: case TIFFTAG_SUBIFD:
+# 376: case TIFFTAG_YCBCRPOSITIONING:
+# 379: case TIFFTAG_YCBCRSUBSAMPLING:
+# 383: case TIFFTAG_TRANSFERFUNCTION:
+# 389: case TIFFTAG_REFERENCEBLACKWHITE:
+# 393: case TIFFTAG_INKNAMES:
 
 # some of these are not in our TAGS_V2 dict and were included from tiff.h
 

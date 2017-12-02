@@ -1,4 +1,4 @@
-#!/export/jmiller/home/gh/clack-tutorial/venv/bin/python
+#!/home/aidenn/gh/clack-tutorial/venv/bin/python
 
 import sys
 import getopt

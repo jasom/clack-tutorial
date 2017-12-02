@@ -129,6 +129,7 @@ def Ghostscript(tile, size, fp, scale=1):
                "-c", "%d %d translate" % (-bbox[0], -bbox[1]),
                                              # adjust for image origin
                "-f", infile,                 # input file
+               "-c", "showpage",             # showpage (see: https://bugs.ghostscript.com/show_bug.cgi?id=698272)
                ]
 
     if gs_windows_binary is not None:
@@ -418,7 +419,6 @@ Image.register_open(EpsImageFile.format, EpsImageFile, _accept)
 
 Image.register_save(EpsImageFile.format, _save)
 
-Image.register_extension(EpsImageFile.format, ".ps")
-Image.register_extension(EpsImageFile.format, ".eps")
+Image.register_extensions(EpsImageFile.format, [".ps", ".eps"])
 
 Image.register_mime(EpsImageFile.format, "application/postscript")

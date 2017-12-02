@@ -1,4 +1,4 @@
-#!/export/jmiller/home/gh/clack-tutorial/venv/bin/python2.7
+#!/home/aidenn/gh/clack-tutorial/venv/bin/python2.7
 #
 # The Python Imaging Library
 # $Id$

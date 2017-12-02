@@ -172,14 +172,14 @@ OPEN_INFO = {
 
     (II, 1, (1,), 1, (16,), ()): ("I;16", "I;16"),
     (MM, 1, (1,), 1, (16,), ()): ("I;16B", "I;16B"),
-    (II, 1, (2,), 1, (16,), ()): ("I;16S", "I;16S"),
-    (MM, 1, (2,), 1, (16,), ()): ("I;16BS", "I;16BS"),
+    (II, 1, (2,), 1, (16,), ()): ("I", "I;16S"),
+    (MM, 1, (2,), 1, (16,), ()): ("I", "I;16BS"),
 
     (II, 0, (3,), 1, (32,), ()): ("F", "F;32F"),
     (MM, 0, (3,), 1, (32,), ()): ("F", "F;32BF"),
     (II, 1, (1,), 1, (32,), ()): ("I", "I;32N"),
     (II, 1, (2,), 1, (32,), ()): ("I", "I;32S"),
-    (MM, 1, (2,), 1, (32,), ()): ("I;32BS", "I;32BS"),
+    (MM, 1, (2,), 1, (32,), ()): ("I", "I;32BS"),
     (II, 1, (3,), 1, (32,), ()): ("F", "F;32F"),
     (MM, 1, (3,), 1, (32,), ()): ("F", "F;32BF"),
 
@@ -200,6 +200,17 @@ OPEN_INFO = {
     (MM, 2, (1,), 1, (8, 8, 8, 8), (2,)): ("RGBA", "RGBA"),
     (II, 2, (1,), 1, (8, 8, 8, 8), (999,)): ("RGBA", "RGBA"),  # Corel Draw 10
     (MM, 2, (1,), 1, (8, 8, 8, 8), (999,)): ("RGBA", "RGBA"),  # Corel Draw 10
+
+    (II, 2, (1,), 1, (16, 16, 16), ()): ("RGB", "RGB;16L"),
+    (MM, 2, (1,), 1, (16, 16, 16), ()): ("RGB", "RGB;16B"),
+    (II, 2, (1,), 1, (16, 16, 16, 16), ()): ("RGBA", "RGBA;16L"),
+    (MM, 2, (1,), 1, (16, 16, 16, 16), ()): ("RGBA", "RGBA;16B"),
+    (II, 2, (1,), 1, (16, 16, 16, 16), (0,)): ("RGBX", "RGBX;16L"),
+    (MM, 2, (1,), 1, (16, 16, 16, 16), (0,)): ("RGBX", "RGBX;16B"),
+    (II, 2, (1,), 1, (16, 16, 16, 16), (1,)): ("RGBA", "RGBa;16L"),
+    (MM, 2, (1,), 1, (16, 16, 16, 16), (1,)): ("RGBA", "RGBa;16B"),
+    (II, 2, (1,), 1, (16, 16, 16, 16), (2,)): ("RGBA", "RGBA;16L"),
+    (MM, 2, (1,), 1, (16, 16, 16, 16), (2,)): ("RGBA", "RGBA;16B"),
 
     (II, 3, (1,), 1, (1,), ()): ("P", "P;1"),
     (MM, 3, (1,), 1, (1,), ()): ("P", "P;1"),
@@ -230,7 +241,12 @@ OPEN_INFO = {
     (MM, 8, (1,), 1, (8, 8, 8), ()): ("LAB", "LAB"),
 }
 
-PREFIXES = [b"MM\000\052", b"II\052\000", b"II\xBC\000"]
+PREFIXES = [
+    b"MM\x00\x2A",  # Valid TIFF header with big-endian byte order
+    b"II\x2A\x00",  # Valid TIFF header with little-endian byte order
+    b"MM\x2A\x00",  # Invalid TIFF header, assume big-endian
+    b"II\x00\x2A",  # Invalid TIFF header, assume little-endian
+]
 
 
 def _accept(prefix):
@@ -534,11 +550,28 @@ class ImageFileDirectory_v2(collections.MutableMapping):
 
         dest = self._tags_v1 if legacy_api else self._tags_v2
 
-        if info.length == 1:
-            if legacy_api and self.tagtype[tag] in [5, 10]:
+        # Three branches:
+        # Spec'd length == 1, Actual length 1, store as element
+        # Spec'd length == 1, Actual > 1, Warn and truncate. Formerly barfed.
+        # No Spec, Actual length 1, Formerly (<4.2) returned a 1 element tuple.
+        # Don't mess with the legacy api, since it's frozen.
+        if ((info.length == 1) or
+            (info.length is None and len(values) == 1 and not legacy_api)):
+            # Don't mess with the legacy api, since it's frozen.
+            if legacy_api and self.tagtype[tag] in [5, 10]: # rationals
                 values = values,
-            dest[tag], = values
+            try:
+                dest[tag], = values
+            except ValueError:
+                # We've got a builtin tag with 1 expected entry
+                warnings.warn(
+                    "Metadata Warning, tag %s had too many entries: %s, expected 1" % (
+                        tag, len(values)))
+                dest[tag] = values[0]
+
         else:
+            # Spec'd length > 1 or undefined
+            # Unspec'd, and length > 1
             dest[tag] = values
 
     def __delitem__(self, tag):
@@ -931,20 +964,25 @@ class TiffImageFile(ImageFile.ImageFile):
     @property
     def is_animated(self):
         if self._is_animated is None:
-            current = self.tell()
+            if self._n_frames is not None:
+                self._is_animated = self._n_frames != 1
+            else:
+                current = self.tell()
 
-            try:
-                self.seek(1)
-                self._is_animated = True
-            except EOFError:
-                self._is_animated = False
+                try:
+                    self.seek(1)
+                    self._is_animated = True
+                except EOFError:
+                    self._is_animated = False
 
-            self.seek(current)
+                self.seek(current)
         return self._is_animated
 
     def seek(self, frame):
         "Select a given frame as current image"
-        self._seek(max(frame, 0))  # Questionable backwards compatibility.
+        if not self._seek_check(frame):
+            return
+        self._seek(frame)
         # Create a new core image object on second and
         # subsequent frames in the image. Image may be
         # different size/mode.
@@ -995,8 +1033,10 @@ class TiffImageFile(ImageFile.ImageFile):
             args = rawmode, ""
             if JPEGTABLES in self.tag_v2:
                 # Hack to handle abbreviated JPEG headers
-                # FIXME This will fail with more than one value
-                self.tile_prefix, = self.tag_v2[JPEGTABLES]
+                # Definition of JPEGTABLES is that the count
+                # is the number of bytes in the tables datastream
+                # so, it should always be 1 in our tag info
+                self.tile_prefix = self.tag_v2[JPEGTABLES]
         elif compression == "packbits":
             args = rawmode
         elif compression == "tiff_lzw":
@@ -1776,7 +1816,6 @@ Image.register_open(TiffImageFile.format, TiffImageFile, _accept)
 Image.register_save(TiffImageFile.format, _save)
 Image.register_save_all(TiffImageFile.format, _save_all)
 
-Image.register_extension(TiffImageFile.format, ".tif")
-Image.register_extension(TiffImageFile.format, ".tiff")
+Image.register_extensions(TiffImageFile.format, [".tif", ".tiff"])
 
 Image.register_mime(TiffImageFile.format, "image/tiff")

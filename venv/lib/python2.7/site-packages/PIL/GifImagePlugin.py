@@ -48,7 +48,7 @@ class GifImageFile(ImageFile.ImageFile):
     format = "GIF"
     format_description = "Compuserve GIF"
     _close_exclusive_fp_after_loading = False
-    
+
     global_palette = None
 
     def data(self):
@@ -102,19 +102,22 @@ class GifImageFile(ImageFile.ImageFile):
     @property
     def is_animated(self):
         if self._is_animated is None:
-            current = self.tell()
+            if self._n_frames is not None:
+                self._is_animated = self._n_frames != 1
+            else:
+                current = self.tell()
 
-            try:
-                self.seek(1)
-                self._is_animated = True
-            except EOFError:
-                self._is_animated = False
+                try:
+                    self.seek(1)
+                    self._is_animated = True
+                except EOFError:
+                    self._is_animated = False
 
-            self.seek(current)
+                self.seek(current)
         return self._is_animated
 
     def seek(self, frame):
-        if frame == self.__frame:
+        if not self._seek_check(frame):
             return
         if frame < self.__frame:
             self._seek(0)
@@ -767,7 +770,7 @@ def getdata(im, offset=(0, 0), **params):
 
     :param im: Image object
     :param offset: Tuple of (x, y) pixels. Defaults to (0,0)
-    :param **params: E.g. duration or other encoder info parameters
+    :param \**params: E.g. duration or other encoder info parameters
     :returns: List of Bytes containing gif encoded frame data
 
     """

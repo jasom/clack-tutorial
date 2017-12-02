@@ -119,8 +119,8 @@ def APP(self, marker):
 
     # If DPI isn't in JPEG header, fetch from EXIF
     if "dpi" not in self.info and "exif" in self.info:
-        exif = self._getexif()
         try:
+            exif = self._getexif()
             resolution_unit = exif[0x0128]
             x_resolution = exif[0x011A]
             try:
@@ -131,7 +131,10 @@ def APP(self, marker):
                 # 1 dpcm = 2.54 dpi
                 dpi *= 2.54
             self.info["dpi"] = dpi, dpi
-        except KeyError:
+        except (KeyError, SyntaxError, ZeroDivisionError):
+            # SyntaxError for invalid/unreadable exif
+            # KeyError for dpi not included
+            # ZeroDivisionError for invalid dpi rational value
             self.info["dpi"] = 72, 72
 
 
@@ -632,7 +635,11 @@ def _save(im, fp, filename):
         subsampling = 0
     elif subsampling == "4:2:2":
         subsampling = 1
+    elif subsampling == "4:2:0":
+        subsampling = 2
     elif subsampling == "4:1:1":
+        # For compatibility. Before Pillow 4.3, 4:1:1 actually meant 4:2:0.
+        # Set 4:2:0 if someone is still using that value.
         subsampling = 2
     elif subsampling == "keep":
         if im.format != "JPEG":
@@ -776,9 +783,6 @@ def jpeg_factory(fp=None, filename=None):
 Image.register_open(JpegImageFile.format, jpeg_factory, _accept)
 Image.register_save(JpegImageFile.format, _save)
 
-Image.register_extension(JpegImageFile.format, ".jfif")
-Image.register_extension(JpegImageFile.format, ".jpe")
-Image.register_extension(JpegImageFile.format, ".jpg")
-Image.register_extension(JpegImageFile.format, ".jpeg")
+Image.register_extensions(JpegImageFile.format, [".jfif", ".jpe", ".jpg", ".jpeg"])
 
 Image.register_mime(JpegImageFile.format, "image/jpeg")
