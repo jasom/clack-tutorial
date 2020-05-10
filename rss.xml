@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clack Tutorial</title><link>https://jasom.github.io/clack-tutorial/</link><description>Tutorial for clack web library</description><atom:link href="https://jasom.github.io/clack-tutorial/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2020 &lt;a href="mailto:jasom@fastmail.com"&gt;Jason Miller&lt;/a&gt; </copyright><lastBuildDate>Tue, 05 May 2020 23:30:13 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Getting started with clack</title><link>https://jasom.github.io/clack-tutorial/posts/getting-started-with-clack/</link><dc:creator>Jason Miller</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clack Tutorial</title><link>https://jasom.github.io/clack-tutorial/</link><description>Tutorial for clack web library</description><atom:link href="https://jasom.github.io/clack-tutorial/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2020 &lt;a href="mailto:jasom@fastmail.com"&gt;Jason Miller&lt;/a&gt; </copyright><lastBuildDate>Sun, 10 May 2020 06:22:36 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Getting started with clack</title><link>https://jasom.github.io/clack-tutorial/posts/getting-started-with-clack/</link><dc:creator>Jason Miller</dc:creator><description>&lt;p&gt;
 Clack is a very simple framework for unifying the different lisp web
 application servers.  However there isn't a lot of documentation for
 it.  This page hopes to address this.
 &lt;/p&gt;
 
-&lt;div id="outline-container-orgf651e6f" class="outline-2"&gt;
-&lt;h2 id="orgf651e6f"&gt;Annotated examples of usage&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-orgf651e6f"&gt;
+&lt;div id="outline-container-org0cb553b" class="outline-2"&gt;
+&lt;h2 id="org0cb553b"&gt;Annotated examples of usage&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-org0cb553b"&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-orgcf8f401" class="outline-3"&gt;
-&lt;h3 id="orgcf8f401"&gt;Formatting&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-orgcf8f401"&gt;
+&lt;div id="outline-container-org34debdc" class="outline-3"&gt;
+&lt;h3 id="org34debdc"&gt;Formatting&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org34debdc"&gt;
 &lt;p&gt;
 All input and output are presented in monospaced preformatted blocks.
 The color indicates what sort they are:
@@ -25,8 +25,10 @@ NIL
 
 &lt;/pre&gt;
 
+&lt;div class="sh"&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;: shell code has a green background, it can be typed at a shell prompt
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;format&lt;/span&gt; &lt;span class="no"&gt;t&lt;/span&gt; &lt;span class="s"&gt;"Output from running commands has a yellow background; do not type this"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -38,9 +40,9 @@ Output from running commands has a yellow background; do not type this
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org923e4bf" class="outline-3"&gt;
-&lt;h3 id="org923e4bf"&gt;Load dependencies used in examples:&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-org923e4bf"&gt;
+&lt;div id="outline-container-orgb73f7f9" class="outline-3"&gt;
+&lt;h3 id="orgb73f7f9"&gt;Load dependencies used in examples:&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-orgb73f7f9"&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ql:quickload&lt;/span&gt; &lt;span class="o"&gt;'&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;clack&lt;/span&gt; &lt;span class="nv"&gt;alexandria&lt;/span&gt; &lt;span class="nv"&gt;optima&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;use-package&lt;/span&gt; &lt;span class="ss"&gt;:optima&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -65,9 +67,9 @@ To load "optima":
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org231cde6" class="outline-3"&gt;
-&lt;h3 id="org231cde6"&gt;Start a simple server&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-org231cde6"&gt;
+&lt;div id="outline-container-orgb837873" class="outline-3"&gt;
+&lt;h3 id="orgb837873"&gt;Start a simple server&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-orgb837873"&gt;
 &lt;p&gt;
 The only required argument for &lt;code&gt;clackup&lt;/code&gt; is the application; the
 simplest form of the application is a function of one argument.
@@ -96,8 +98,10 @@ Listening on localhost:5000.
 Let's test it with curl:
 &lt;/p&gt;
 
+&lt;div class="sh"&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;   curl -s http://localhost:5000
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;pre class="example"&gt;
 Hello, World!
@@ -106,17 +110,17 @@ Hello, World!
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-orge897ef2" class="outline-3"&gt;
-&lt;h3 id="orge897ef2"&gt;Stop the server&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-orge897ef2"&gt;
+&lt;div id="outline-container-org6150841" class="outline-3"&gt;
+&lt;h3 id="org6150841"&gt;Stop the server&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org6150841"&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;clack:stop&lt;/span&gt; &lt;span class="vg"&gt;*clack-server*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org982b35e" class="outline-3"&gt;
-&lt;h3 id="org982b35e"&gt;Redefining the handler&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-org982b35e"&gt;
+&lt;div id="outline-container-org2326c23" class="outline-3"&gt;
+&lt;h3 id="org2326c23"&gt;Redefining the handler&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org2326c23"&gt;
 &lt;p&gt;
 It's a bit of a pain to have to restart the server all the time, let's make a redefinable handler:
 &lt;/p&gt;
@@ -139,8 +143,10 @@ Listening on localhost:5000.
 &lt;p&gt;
 Check that it works…
 &lt;/p&gt;
+&lt;div class="sh"&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;   curl -s http://localhost:5000
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;pre class="example"&gt;
 Hello World, redefinable!
@@ -157,8 +163,10 @@ Now let's redefine it and take a look at what is in the environment:
 &lt;p&gt;
 View results…
 &lt;/p&gt;
+&lt;div class="sh"&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;   curl -s http://localhost:5000
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;pre class="example"&gt;
 (:REQUEST-METHOD :GET :SCRIPT-NAME "" :PATH-INFO "/" :SERVER-NAME "localhost"
@@ -194,8 +202,10 @@ The fact that it is a plist means capturing values of interest can be done with 
                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;alexandria:hash-table-alist&lt;/span&gt; &lt;span class="nv"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;))))))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
+&lt;div class="sh"&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -s http://localhost:5000
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;pre class="example"&gt;
 Method: :GET Path: "/" URI: / Query: NIL
@@ -219,10 +229,12 @@ Optima can be useful too:
        &lt;span class="o"&gt;`&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;404&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;format&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt; &lt;span class="s"&gt;"Path ~A not found~%"&lt;/span&gt; &lt;span class="nv"&gt;path&lt;/span&gt;&lt;span class="p"&gt;))))))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
+&lt;div class="sh"&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;   curl -s http://localhost:5000/foo/quux
    curl -s http://localhost:5000/bar/quux
    curl -s http://localhost:5000/baz/quux
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;pre class="example"&gt;
 The path '/foo/quux' is in /foo/
@@ -234,17 +246,17 @@ Path /baz/quux not found
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org582fe4e" class="outline-2"&gt;
-&lt;h2 id="org582fe4e"&gt;Public API&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-org582fe4e"&gt;
+&lt;div id="outline-container-org50256f5" class="outline-2"&gt;
+&lt;h2 id="org50256f5"&gt;Public API&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-org50256f5"&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-org95221c7" class="outline-3"&gt;
-&lt;h3 id="org95221c7"&gt;CLACK:CLACKUP&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-org95221c7"&gt;
+&lt;div id="outline-container-org0f7fafe" class="outline-3"&gt;
+&lt;h3 id="org0f7fafe"&gt;CLACK:CLACKUP&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org0f7fafe"&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-org11add97" class="outline-4"&gt;
-&lt;h4 id="org11add97"&gt;Syntax:&lt;/h4&gt;
-&lt;div class="outline-text-4" id="text-org11add97"&gt;
+&lt;div id="outline-container-org44bf93d" class="outline-4"&gt;
+&lt;h4 id="org44bf93d"&gt;Syntax:&lt;/h4&gt;
+&lt;div class="outline-text-4" id="text-org44bf93d"&gt;
 &lt;p&gt;
 &lt;b&gt;clackup&lt;/b&gt; &lt;i&gt;app&lt;/i&gt; &lt;i&gt;&amp;amp;key&lt;/i&gt; &lt;i&gt;server&lt;/i&gt; &lt;i&gt;port&lt;/i&gt; &lt;i&gt;debug&lt;/i&gt; &lt;i&gt;silent&lt;/i&gt;
 &lt;i&gt;use-thread&lt;/i&gt; &lt;i&gt;use-default-middlewares&lt;/i&gt; &lt;i&gt;&amp;amp;allow-other-keys&lt;/i&gt;
@@ -256,32 +268,32 @@ Path /baz/quux not found
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-org7453ec3" class="outline-4"&gt;
-&lt;h4 id="org7453ec3"&gt;Arguments and Values:&lt;/h4&gt;
-&lt;div class="outline-text-4" id="text-org7453ec3"&gt;
+&lt;div id="outline-container-org00d6371" class="outline-4"&gt;
+&lt;h4 id="org00d6371"&gt;Arguments and Values:&lt;/h4&gt;
+&lt;div class="outline-text-4" id="text-org00d6371"&gt;
 &lt;/div&gt;
 &lt;ul class="org-ul"&gt;
-&lt;li&gt;&lt;a id="orga02a7d8"&gt;&lt;/a&gt;&lt;i&gt;app&lt;/i&gt;–A &lt;i&gt;designator&lt;/i&gt; for a &lt;i&gt;function&lt;/i&gt; of one argument;or a subclass of &lt;code&gt;lack.component:lack-component&lt;/code&gt;;or a &lt;i&gt;pathname&lt;/i&gt;; or a &lt;i&gt;string&lt;/i&gt;.&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="org1f46004"&gt;&lt;/a&gt;&lt;i&gt;app&lt;/i&gt;–A &lt;i&gt;designator&lt;/i&gt; for a &lt;i&gt;function&lt;/i&gt; of one argument;or a subclass of &lt;code&gt;lack.component:lack-component&lt;/code&gt;;or a &lt;i&gt;pathname&lt;/i&gt;; or a &lt;i&gt;string&lt;/i&gt;.&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org023a1da"&gt;&lt;/a&gt;&lt;i&gt;server&lt;/i&gt;–A symbol.  The default is &lt;code&gt;:hunchentoot&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="orga24cea1"&gt;&lt;/a&gt;&lt;i&gt;server&lt;/i&gt;–A symbol.  The default is &lt;code&gt;:hunchentoot&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org7bd3f52"&gt;&lt;/a&gt;&lt;i&gt;port&lt;/i&gt;–An integer.  The default is 5000&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="org2e9a6fd"&gt;&lt;/a&gt;&lt;i&gt;port&lt;/i&gt;–An integer.  The default is 5000&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org614e44e"&gt;&lt;/a&gt;&lt;i&gt;debug&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="orgb8a6234"&gt;&lt;/a&gt;&lt;i&gt;debug&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="orgf46a709"&gt;&lt;/a&gt;&lt;i&gt;silent&lt;/i&gt;–A boolean.  The default is &lt;code&gt;nil&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="orgceb47d0"&gt;&lt;/a&gt;&lt;i&gt;silent&lt;/i&gt;–A boolean.  The default is &lt;code&gt;nil&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org3d16b8f"&gt;&lt;/a&gt;&lt;i&gt;use-thread&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt; on systems that support threading and &lt;code&gt;nil&lt;/code&gt; otherwise.&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="org2c816e1"&gt;&lt;/a&gt;&lt;i&gt;use-thread&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt; on systems that support threading and &lt;code&gt;nil&lt;/code&gt; otherwise.&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org84e825a"&gt;&lt;/a&gt;&lt;i&gt;use-default-middlewares&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="org222fa1b"&gt;&lt;/a&gt;&lt;i&gt;use-default-middlewares&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org872ef6e"&gt;&lt;/a&gt;&lt;i&gt;handler&lt;/i&gt;–A clack.handler::handler.&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="org1dabec9"&gt;&lt;/a&gt;&lt;i&gt;handler&lt;/i&gt;–A clack.handler::handler.&lt;br&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org4c7c80c" class="outline-4"&gt;
-&lt;h4 id="org4c7c80c"&gt;Description:&lt;/h4&gt;
-&lt;div class="outline-text-4" id="text-org4c7c80c"&gt;
+&lt;div id="outline-container-org8aa8c5d" class="outline-4"&gt;
+&lt;h4 id="org8aa8c5d"&gt;Description:&lt;/h4&gt;
+&lt;div class="outline-text-4" id="text-org8aa8c5d"&gt;
 &lt;p&gt;
 &lt;code&gt;clackup&lt;/code&gt; starts a server using the backend designated by &lt;i&gt;server&lt;/i&gt; on
 port &lt;i&gt;port&lt;/i&gt;.

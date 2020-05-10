@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://jasom.github.io/clack-tutorial/categories/cat_posts.xml</loc>
-  <lastmod>2020-05-05T22:06:00Z</lastmod>
+  <lastmod>2020-05-10T06:18:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jasom.github.io/clack-tutorial/galleries/rss.xml</loc>
@@ -15,10 +15,10 @@
  </sitemap>
  <sitemap>
   <loc>https://jasom.github.io/clack-tutorial/rss.xml</loc>
-  <lastmod>2020-05-05T22:06:00Z</lastmod>
+  <lastmod>2020-05-10T06:18:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jasom.github.io/clack-tutorial/sitemap.xml</loc>
-  <lastmod>2020-05-05T22:06:00Z</lastmod>
+  <lastmod>2020-05-10T06:18:00Z</lastmod>
  </sitemap>
 </sitemapindex>

@@ -103,13 +103,13 @@ application servers.  However there isn't a lot of documentation for
 it.  This page hopes to address this.
 </p>
 
-<div id="outline-container-orgf651e6f" class="outline-2">
-<h2 id="orgf651e6f">Annotated examples of usage</h2>
-<div class="outline-text-2" id="text-orgf651e6f">
+<div id="outline-container-org0cb553b" class="outline-2">
+<h2 id="org0cb553b">Annotated examples of usage</h2>
+<div class="outline-text-2" id="text-org0cb553b">
 </div>
-<div id="outline-container-orgcf8f401" class="outline-3">
-<h3 id="orgcf8f401">Formatting</h3>
-<div class="outline-text-3" id="text-orgcf8f401">
+<div id="outline-container-org34debdc" class="outline-3">
+<h3 id="org34debdc">Formatting</h3>
+<div class="outline-text-3" id="text-org34debdc">
 <p>
 All input and output are presented in monospaced preformatted blocks.
 The color indicates what sort they are:
@@ -123,8 +123,10 @@ NIL
 
 </pre>
 
+<div class="sh">
 <div class="highlight"><pre><span></span>: shell code has a green background, it can be typed at a shell prompt
 </pre></div>
+</div>
 
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">"Output from running commands has a yellow background; do not type this"</span><span class="p">)</span>
 </pre></div>
@@ -136,9 +138,9 @@ Output from running commands has a yellow background; do not type this
 </div>
 </div>
 
-<div id="outline-container-org923e4bf" class="outline-3">
-<h3 id="org923e4bf">Load dependencies used in examples:</h3>
-<div class="outline-text-3" id="text-org923e4bf">
+<div id="outline-container-orgb73f7f9" class="outline-3">
+<h3 id="orgb73f7f9">Load dependencies used in examples:</h3>
+<div class="outline-text-3" id="text-orgb73f7f9">
 <div class="highlight"><pre><span></span>   <span class="p">(</span><span class="nv">ql:quickload</span> <span class="o">'</span><span class="p">(</span><span class="nv">clack</span> <span class="nv">alexandria</span> <span class="nv">optima</span><span class="p">))</span>
    <span class="p">(</span><span class="nb">use-package</span> <span class="ss">:optima</span><span class="p">)</span>
 </pre></div>
@@ -163,9 +165,9 @@ To load "optima":
 </div>
 </div>
 
-<div id="outline-container-org231cde6" class="outline-3">
-<h3 id="org231cde6">Start a simple server</h3>
-<div class="outline-text-3" id="text-org231cde6">
+<div id="outline-container-orgb837873" class="outline-3">
+<h3 id="orgb837873">Start a simple server</h3>
+<div class="outline-text-3" id="text-orgb837873">
 <p>
 The only required argument for <code>clackup</code> is the application; the
 simplest form of the application is a function of one argument.
@@ -194,8 +196,10 @@ Listening on localhost:5000.
 Let's test it with curl:
 </p>
 
+<div class="sh">
 <div class="highlight"><pre><span></span>   curl -s http://localhost:5000
 </pre></div>
+</div>
 
 <pre class="example">
 Hello, World!
@@ -204,17 +208,17 @@ Hello, World!
 </div>
 </div>
 
-<div id="outline-container-orge897ef2" class="outline-3">
-<h3 id="orge897ef2">Stop the server</h3>
-<div class="outline-text-3" id="text-orge897ef2">
+<div id="outline-container-org6150841" class="outline-3">
+<h3 id="org6150841">Stop the server</h3>
+<div class="outline-text-3" id="text-org6150841">
 <div class="highlight"><pre><span></span>     <span class="p">(</span><span class="nv">clack:stop</span> <span class="vg">*clack-server*</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 
-<div id="outline-container-org982b35e" class="outline-3">
-<h3 id="org982b35e">Redefining the handler</h3>
-<div class="outline-text-3" id="text-org982b35e">
+<div id="outline-container-org2326c23" class="outline-3">
+<h3 id="org2326c23">Redefining the handler</h3>
+<div class="outline-text-3" id="text-org2326c23">
 <p>
 It's a bit of a pain to have to restart the server all the time, let's make a redefinable handler:
 </p>
@@ -237,8 +241,10 @@ Listening on localhost:5000.
 <p>
 Check that it works…
 </p>
+<div class="sh">
 <div class="highlight"><pre><span></span>   curl -s http://localhost:5000
 </pre></div>
+</div>
 
 <pre class="example">
 Hello World, redefinable!
@@ -255,8 +261,10 @@ Now let's redefine it and take a look at what is in the environment:
 <p>
 View results…
 </p>
+<div class="sh">
 <div class="highlight"><pre><span></span>   curl -s http://localhost:5000
 </pre></div>
+</div>
 
 <pre class="example">
 (:REQUEST-METHOD :GET :SCRIPT-NAME "" :PATH-INFO "/" :SERVER-NAME "localhost"
@@ -292,8 +300,10 @@ The fact that it is a plist means capturing values of interest can be done with 
                   <span class="p">(</span><span class="nv">alexandria:hash-table-alist</span> <span class="nv">headers</span><span class="p">))))))</span>
 </pre></div>
 
+<div class="sh">
 <div class="highlight"><pre><span></span>curl -s http://localhost:5000
 </pre></div>
+</div>
 
 <pre class="example">
 Method: :GET Path: "/" URI: / Query: NIL
@@ -317,10 +327,12 @@ Optima can be useful too:
        <span class="o">`</span><span class="p">(</span><span class="mi">404</span> <span class="no">nil</span> <span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">"Path ~A not found~%"</span> <span class="nv">path</span><span class="p">))))))</span>
 </pre></div>
 
+<div class="sh">
 <div class="highlight"><pre><span></span>   curl -s http://localhost:5000/foo/quux
    curl -s http://localhost:5000/bar/quux
    curl -s http://localhost:5000/baz/quux
 </pre></div>
+</div>
 
 <pre class="example">
 The path '/foo/quux' is in /foo/
@@ -332,17 +344,17 @@ Path /baz/quux not found
 </div>
 </div>
 
-<div id="outline-container-org582fe4e" class="outline-2">
-<h2 id="org582fe4e">Public API</h2>
-<div class="outline-text-2" id="text-org582fe4e">
+<div id="outline-container-org50256f5" class="outline-2">
+<h2 id="org50256f5">Public API</h2>
+<div class="outline-text-2" id="text-org50256f5">
 </div>
-<div id="outline-container-org95221c7" class="outline-3">
-<h3 id="org95221c7">CLACK:CLACKUP</h3>
-<div class="outline-text-3" id="text-org95221c7">
+<div id="outline-container-org0f7fafe" class="outline-3">
+<h3 id="org0f7fafe">CLACK:CLACKUP</h3>
+<div class="outline-text-3" id="text-org0f7fafe">
 </div>
-<div id="outline-container-org11add97" class="outline-4">
-<h4 id="org11add97">Syntax:</h4>
-<div class="outline-text-4" id="text-org11add97">
+<div id="outline-container-org44bf93d" class="outline-4">
+<h4 id="org44bf93d">Syntax:</h4>
+<div class="outline-text-4" id="text-org44bf93d">
 <p>
 <b>clackup</b> <i>app</i> <i>&amp;key</i> <i>server</i> <i>port</i> <i>debug</i> <i>silent</i>
 <i>use-thread</i> <i>use-default-middlewares</i> <i>&amp;allow-other-keys</i>
@@ -354,48 +366,48 @@ Path /baz/quux not found
 </p>
 </div>
 </div>
-<div id="outline-container-org7453ec3" class="outline-4">
-<h4 id="org7453ec3">Arguments and Values:</h4>
-<div class="outline-text-4" id="text-org7453ec3">
+<div id="outline-container-org00d6371" class="outline-4">
+<h4 id="org00d6371">Arguments and Values:</h4>
+<div class="outline-text-4" id="text-org00d6371">
 </div>
 <ul class="org-ul">
 <li>
-<a id="orga02a7d8"></a><i>app</i>–A <i>designator</i> for a <i>function</i> of one argument;or a subclass of <code>lack.component:lack-component</code>;or a <i>pathname</i>; or a <i>string</i>.<br>
+<a id="org1f46004"></a><i>app</i>–A <i>designator</i> for a <i>function</i> of one argument;or a subclass of <code>lack.component:lack-component</code>;or a <i>pathname</i>; or a <i>string</i>.<br>
 </li>
 
 <li>
-<a id="org023a1da"></a><i>server</i>–A symbol.  The default is <code>:hunchentoot</code><br>
+<a id="orga24cea1"></a><i>server</i>–A symbol.  The default is <code>:hunchentoot</code><br>
 </li>
 
 <li>
-<a id="org7bd3f52"></a><i>port</i>–An integer.  The default is 5000<br>
+<a id="org2e9a6fd"></a><i>port</i>–An integer.  The default is 5000<br>
 </li>
 
 <li>
-<a id="org614e44e"></a><i>debug</i>–A boolean.  The default is <code>t</code><br>
+<a id="orgb8a6234"></a><i>debug</i>–A boolean.  The default is <code>t</code><br>
 </li>
 
 <li>
-<a id="orgf46a709"></a><i>silent</i>–A boolean.  The default is <code>nil</code><br>
+<a id="orgceb47d0"></a><i>silent</i>–A boolean.  The default is <code>nil</code><br>
 </li>
 
 <li>
-<a id="org3d16b8f"></a><i>use-thread</i>–A boolean.  The default is <code>t</code> on systems that support threading and <code>nil</code> otherwise.<br>
+<a id="org2c816e1"></a><i>use-thread</i>–A boolean.  The default is <code>t</code> on systems that support threading and <code>nil</code> otherwise.<br>
 </li>
 
 <li>
-<a id="org84e825a"></a><i>use-default-middlewares</i>–A boolean.  The default is <code>t</code><br>
+<a id="org222fa1b"></a><i>use-default-middlewares</i>–A boolean.  The default is <code>t</code><br>
 </li>
 
 <li>
-<a id="org872ef6e"></a><i>handler</i>–A clack.handler::handler.<br>
+<a id="org1dabec9"></a><i>handler</i>–A clack.handler::handler.<br>
 </li>
 </ul>
 </div>
 
-<div id="outline-container-org4c7c80c" class="outline-4">
-<h4 id="org4c7c80c">Description:</h4>
-<div class="outline-text-4" id="text-org4c7c80c">
+<div id="outline-container-org8aa8c5d" class="outline-4">
+<h4 id="org8aa8c5d">Description:</h4>
+<div class="outline-text-4" id="text-org8aa8c5d">
 <p>
 <code>clackup</code> starts a server using the backend designated by <i>server</i> on
 port <i>port</i>.
