@@ -25,9 +25,11 @@ The color indicates what sort they are:
 #+RESULTS:
 : NIL
 
+#+HTML: <div class="sh">
 #+BEGIN_SRC sh :exports code
 : shell code has a green background, it can be typed at a shell prompt
 #+END_SRC
+#+HTML: </div>
 
 #+RESULTS:
 
@@ -84,9 +86,11 @@ The color indicates what sort they are:
   
    Let's test it with curl:
 
+  #+HTML: <div class="sh">
   #+BEGIN_SRC sh :results output :exports both
    curl -s http://localhost:5000
   #+END_SRC
+  #+HTML: </div>
 
   #+RESULTS:
   : Hello, World!
@@ -118,9 +122,11 @@ And start the server; we call the function by name to allow redefinition
   : Listening on localhost:5000.
 
 Check that it works...
+  #+HTML: <div class="sh">
   #+BEGIN_SRC sh :results output :exports both
    curl -s http://localhost:5000
   #+END_SRC
+  #+HTML: </div>
 
   #+RESULTS:
   : Hello World, redefinable!
@@ -134,9 +140,11 @@ Now let's redefine it and take a look at what is in the environment:
    #+RESULTS:
 
 View results...
+  #+HTML: <div class="sh">
   #+BEGIN_SRC sh :results output :exports both
    curl -s http://localhost:5000
   #+END_SRC
+  #+HTML: </div>
 
   #+RESULTS:
   : (:REQUEST-METHOD :GET :SCRIPT-NAME "" :PATH-INFO "/" :SERVER-NAME "localhost"
@@ -167,9 +175,11 @@ The fact that it is a plist means capturing values of interest can be done with 
 
 #+RESULTS:
 
+#+HTML: <div class="sh">
 #+BEGIN_SRC sh :results output :exports both
 curl -s http://localhost:5000
 #+END_SRC
+#+HTML: </div>
 
 #+RESULTS:
 : Method: :GET Path: "/" URI: / Query: NIL
@@ -192,11 +202,13 @@ Optima can be useful too:
 
 #+RESULTS:
 
+  #+HTML: <div class="sh">
   #+BEGIN_SRC sh :results output :exports both
    curl -s http://localhost:5000/foo/quux
    curl -s http://localhost:5000/bar/quux
    curl -s http://localhost:5000/baz/quux
   #+END_SRC
+  #+HTML: </div>
 
   #+RESULTS:
   : The path '/foo/quux' is in /foo/
