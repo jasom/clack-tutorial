@@ -182,6 +182,7 @@ THEME_COLOR = '#5670d4'
 #     )
 
 POSTS = (
+    ("pages/*.org", "posts", "post.tmpl"),
 )
 PAGES = (
     ("pages/*.rst", "pages", "story.tmpl"),
