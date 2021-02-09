@@ -157,7 +157,7 @@ View results...
 
 This is the core part of clack; the environment plist.
 
-Documentation for it is available [[http://quickdocs.org/lack/#the-environment][on quickdocs.]]
+Documentation for it is available [[https://github.com/fukamachi/lack#the-environment][in the lack README]]
 
 The fact that it is a plist means capturing values of interest can be done with ~destructuring-bind~:
 

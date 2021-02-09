@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="rss.xml">
 <link rel="canonical" href="https://jasom.github.io/clack-tutorial/">
 <!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/getting-started-with-clack/" type="text/html">
 </head>
@@ -28,7 +28,7 @@
             </div>
         </div>
           <div class="col-md-6 col-xs-10 col-sm-10 bootblog4-brand" style="width: auto;">
-            <a class="navbar-brand blog-header-logo text-dark" href="https://jasom.github.io/clack-tutorial/">
+            <a class="navbar-brand blog-header-logo text-dark" href=".">
 
             <span id="blog-title">Clack Tutorial</span>
         </a>
@@ -85,13 +85,13 @@ application servers.  However there isn't a lot of documentation for
 it.  This page hopes to address this.
 </p>
 
-<div id="outline-container-org0cb553b" class="outline-2">
-<h2 id="org0cb553b">Annotated examples of usage</h2>
-<div class="outline-text-2" id="text-org0cb553b">
+<div id="outline-container-orga52465a" class="outline-2">
+<h2 id="orga52465a">Annotated examples of usage</h2>
+<div class="outline-text-2" id="text-orga52465a">
 </div>
-<div id="outline-container-org34debdc" class="outline-3">
-<h3 id="org34debdc">Formatting</h3>
-<div class="outline-text-3" id="text-org34debdc">
+<div id="outline-container-orgcc3e6a8" class="outline-3">
+<h3 id="orgcc3e6a8">Formatting</h3>
+<div class="outline-text-3" id="text-orgcc3e6a8">
 <p>
 All input and output are presented in monospaced preformatted blocks.
 The color indicates what sort they are:
@@ -102,8 +102,8 @@ The color indicates what sort they are:
 
 <pre class="example">
 NIL
-
 </pre>
+
 
 <div class="sh">
 <div class="highlight"><pre><span></span>: shell code has a green background, it can be typed at a shell prompt
@@ -115,19 +115,18 @@ NIL
 
 <pre class="example">
 Output from running commands has a yellow background; do not type this
-
 </pre>
 </div>
 </div>
 
-<div id="outline-container-orgb73f7f9" class="outline-3">
-<h3 id="orgb73f7f9">Load dependencies used in examples:</h3>
-<div class="outline-text-3" id="text-orgb73f7f9">
+<div id="outline-container-org67a61cc" class="outline-3">
+<h3 id="org67a61cc">Load dependencies used in examples:</h3>
+<div class="outline-text-3" id="text-org67a61cc">
 <div class="highlight"><pre><span></span>   <span class="p">(</span><span class="nv">ql:quickload</span> <span class="o">'</span><span class="p">(</span><span class="nv">clack</span> <span class="nv">alexandria</span> <span class="nv">optima</span><span class="p">))</span>
    <span class="p">(</span><span class="nb">use-package</span> <span class="ss">:optima</span><span class="p">)</span>
 </pre></div>
 
-<pre class="example">
+<pre class="example" id="org01c955d">
 To load "clack":
   Load 1 ASDF system:
     clack
@@ -147,9 +146,9 @@ To load "optima":
 </div>
 </div>
 
-<div id="outline-container-orgb837873" class="outline-3">
-<h3 id="orgb837873">Start a simple server</h3>
-<div class="outline-text-3" id="text-orgb837873">
+<div id="outline-container-orgf91a6dd" class="outline-3">
+<h3 id="orgf91a6dd">Start a simple server</h3>
+<div class="outline-text-3" id="text-orgf91a6dd">
 <p>
 The only required argument for <code>clackup</code> is the application; the
 simplest form of the application is a function of one argument.
@@ -170,8 +169,8 @@ The function should retun a list of the form (<i>http-response-code</i> <i>http-
 <pre class="example">
 Hunchentoot server is started.
 Listening on localhost:5000.
-
 </pre>
+
 
 
 <p>
@@ -185,22 +184,21 @@ Let's test it with curl:
 
 <pre class="example">
 Hello, World!
-
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org6150841" class="outline-3">
-<h3 id="org6150841">Stop the server</h3>
-<div class="outline-text-3" id="text-org6150841">
+<div id="outline-container-org66fa35f" class="outline-3">
+<h3 id="org66fa35f">Stop the server</h3>
+<div class="outline-text-3" id="text-org66fa35f">
 <div class="highlight"><pre><span></span>     <span class="p">(</span><span class="nv">clack:stop</span> <span class="vg">*clack-server*</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 
-<div id="outline-container-org2326c23" class="outline-3">
-<h3 id="org2326c23">Redefining the handler</h3>
-<div class="outline-text-3" id="text-org2326c23">
+<div id="outline-container-org19601ab" class="outline-3">
+<h3 id="org19601ab">Redefining the handler</h3>
+<div class="outline-text-3" id="text-org19601ab">
 <p>
 It's a bit of a pain to have to restart the server all the time, let's make a redefinable handler:
 </p>
@@ -217,8 +215,8 @@ And start the server; we call the function by name to allow redefinition
 <pre class="example">
 Hunchentoot server is started.
 Listening on localhost:5000.
-
 </pre>
+
 
 <p>
 Check that it works…
@@ -230,8 +228,8 @@ Check that it works…
 
 <pre class="example">
 Hello World, redefinable!
-
 </pre>
+
 
 <p>
 Now let's redefine it and take a look at what is in the environment:
@@ -256,15 +254,15 @@ View results…
  :CONTENT-TYPE NIL :CLACK.STREAMING T :CLACK.IO
  #&lt;CLACK.HANDLER.HUNCHENTOOT::CLIENT {1021B537F3}&gt; :HEADERS
  #&lt;HASH-TABLE :TEST EQUAL :COUNT 3 {1021B53C13}&gt;)
-
 </pre>
+
 
 <p>
 This is the core part of clack; the environment plist.
 </p>
 
 <p>
-Documentation for it is available <a href="http://quickdocs.org/lack/#the-environment">on quickdocs.</a>
+Documentation for it is available <a href="https://github.com/fukamachi/lack#the-environment">in the lack README</a>
 </p>
 
 <p>
@@ -291,8 +289,8 @@ The fact that it is a plist means capturing values of interest can be done with 
 Method: :GET Path: "/" URI: / Query: NIL
 Headers: (("accept" . "*/*") ("user-agent" . "curl/7.53.0")
           ("host" . "localhost:5000"))
-
 </pre>
+
 
 <p>
 Optima can be useful too:
@@ -320,23 +318,22 @@ Optima can be useful too:
 The path '/foo/quux' is in /foo/
 The path '/bar/quux' is in /bar/
 Path /baz/quux not found
-
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org50256f5" class="outline-2">
-<h2 id="org50256f5">Public API</h2>
-<div class="outline-text-2" id="text-org50256f5">
+<div id="outline-container-org3f902e5" class="outline-2">
+<h2 id="org3f902e5">Public API</h2>
+<div class="outline-text-2" id="text-org3f902e5">
 </div>
-<div id="outline-container-org0f7fafe" class="outline-3">
-<h3 id="org0f7fafe">CLACK:CLACKUP</h3>
-<div class="outline-text-3" id="text-org0f7fafe">
+<div id="outline-container-org9449be7" class="outline-3">
+<h3 id="org9449be7">CLACK:CLACKUP</h3>
+<div class="outline-text-3" id="text-org9449be7">
 </div>
-<div id="outline-container-org44bf93d" class="outline-4">
-<h4 id="org44bf93d">Syntax:</h4>
-<div class="outline-text-4" id="text-org44bf93d">
+<div id="outline-container-orgc021494" class="outline-4">
+<h4 id="orgc021494">Syntax:</h4>
+<div class="outline-text-4" id="text-orgc021494">
 <p>
 <b>clackup</b> <i>app</i> <i>&amp;key</i> <i>server</i> <i>port</i> <i>debug</i> <i>silent</i>
 <i>use-thread</i> <i>use-default-middlewares</i> <i>&amp;allow-other-keys</i>
@@ -348,48 +345,48 @@ Path /baz/quux not found
 </p>
 </div>
 </div>
-<div id="outline-container-org00d6371" class="outline-4">
-<h4 id="org00d6371">Arguments and Values:</h4>
-<div class="outline-text-4" id="text-org00d6371">
+<div id="outline-container-org94450af" class="outline-4">
+<h4 id="org94450af">Arguments and Values:</h4>
+<div class="outline-text-4" id="text-org94450af">
 </div>
 <ul class="org-ul">
 <li>
-<a id="org1f46004"></a><i>app</i>–A <i>designator</i> for a <i>function</i> of one argument;or a subclass of <code>lack.component:lack-component</code>;or a <i>pathname</i>; or a <i>string</i>.<br>
+<a id="orgf5150b9"></a><i>app</i>–A <i>designator</i> for a <i>function</i> of one argument;or a subclass of <code>lack.component:lack-component</code>;or a <i>pathname</i>; or a <i>string</i>.<br>
 </li>
 
 <li>
-<a id="orga24cea1"></a><i>server</i>–A symbol.  The default is <code>:hunchentoot</code><br>
+<a id="org51e1c92"></a><i>server</i>–A symbol.  The default is <code>:hunchentoot</code><br>
 </li>
 
 <li>
-<a id="org2e9a6fd"></a><i>port</i>–An integer.  The default is 5000<br>
+<a id="org53ca9e8"></a><i>port</i>–An integer.  The default is 5000<br>
 </li>
 
 <li>
-<a id="orgb8a6234"></a><i>debug</i>–A boolean.  The default is <code>t</code><br>
+<a id="org98f2b6a"></a><i>debug</i>–A boolean.  The default is <code>t</code><br>
 </li>
 
 <li>
-<a id="orgceb47d0"></a><i>silent</i>–A boolean.  The default is <code>nil</code><br>
+<a id="org5e1d097"></a><i>silent</i>–A boolean.  The default is <code>nil</code><br>
 </li>
 
 <li>
-<a id="org2c816e1"></a><i>use-thread</i>–A boolean.  The default is <code>t</code> on systems that support threading and <code>nil</code> otherwise.<br>
+<a id="org0abacf6"></a><i>use-thread</i>–A boolean.  The default is <code>t</code> on systems that support threading and <code>nil</code> otherwise.<br>
 </li>
 
 <li>
-<a id="org222fa1b"></a><i>use-default-middlewares</i>–A boolean.  The default is <code>t</code><br>
+<a id="orgfea98c9"></a><i>use-default-middlewares</i>–A boolean.  The default is <code>t</code><br>
 </li>
 
 <li>
-<a id="org1dabec9"></a><i>handler</i>–A clack.handler::handler.<br>
+<a id="org12b10a3"></a><i>handler</i>–A clack.handler::handler.<br>
 </li>
 </ul>
 </div>
 
-<div id="outline-container-org8aa8c5d" class="outline-4">
-<h4 id="org8aa8c5d">Description:</h4>
-<div class="outline-text-4" id="text-org8aa8c5d">
+<div id="outline-container-org281e5b2" class="outline-4">
+<h4 id="org281e5b2">Description:</h4>
+<div class="outline-text-4" id="text-org281e5b2">
 <p>
 <code>clackup</code> starts a server using the backend designated by <i>server</i> on
 port <i>port</i>.
@@ -444,7 +441,7 @@ backend specific, but typically will handle all errors in the body of
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2020         <a href="mailto:jasom@fastmail.com">Jason Miller</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2021         <a href="mailto:jasom@fastmail.com">Jason Miller</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
             
             
         </footer>
@@ -455,9 +452,7 @@ backend specific, but typically will handle all errors in the body of
         <script src="assets/js/all-nocdn.js"></script><script>
     baguetteBox.run('div#content', {
         ignoreClass: 'islink',
-        captions: function(element) {
-            return element.getElementsByTagName('img')[0].alt;
-    }});
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
     </script>
 </body>
 </html>
