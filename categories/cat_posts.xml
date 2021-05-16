@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clack Tutorial (Posts about posts)</title><link>https://jasom.github.io/clack-tutorial/</link><description></description><atom:link href="https://jasom.github.io/clack-tutorial/categories/cat_posts.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2021 &lt;a href="mailto:jasom@fastmail.com"&gt;Jason Miller&lt;/a&gt; </copyright><lastBuildDate>Tue, 09 Feb 2021 09:28:52 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Getting started with clack</title><link>https://jasom.github.io/clack-tutorial/posts/getting-started-with-clack/</link><dc:creator>Jason Miller</dc:creator><description>&lt;p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clack Tutorial (Posts about posts)</title><link>https://jasom.github.io/clack-tutorial/</link><description></description><atom:link href="https://jasom.github.io/clack-tutorial/categories/cat_posts.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2021 &lt;a href="mailto:jasom@fastmail.com"&gt;Jason Miller&lt;/a&gt; </copyright><lastBuildDate>Sun, 16 May 2021 05:16:13 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Clack File Uploads</title><link>https://jasom.github.io/clack-tutorial/posts/clack-file-upoad/</link><dc:creator>Jason Miller</dc:creator><description>&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;defun&lt;/span&gt; &lt;span class="nv"&gt;upload-demo&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;env&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;getf&lt;/span&gt; &lt;span class="nv"&gt;env&lt;/span&gt; &lt;span class="ss"&gt;:request-method&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:get&lt;/span&gt;
+     &lt;span class="o"&gt;`&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+       &lt;span class="mi"&gt;200&lt;/span&gt;
+       &lt;span class="no"&gt;nil&lt;/span&gt;
+       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;cl-who:with-html-output-to-string&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+	   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:html&lt;/span&gt;
+	    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:body&lt;/span&gt;
+	     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:form&lt;/span&gt; &lt;span class="ss"&gt;:method&lt;/span&gt; &lt;span class="s"&gt;"post"&lt;/span&gt;	           &lt;span class="c1"&gt;; Any combination other than post &amp;amp; multipart/form-data&lt;/span&gt;
+		    &lt;span class="ss"&gt;:enctype&lt;/span&gt; &lt;span class="s"&gt;"multipart/form-data"&lt;/span&gt; &lt;span class="c1"&gt;; causes the browser to just send the filename&lt;/span&gt;
+	      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:input&lt;/span&gt; &lt;span class="ss"&gt;:type&lt;/span&gt; &lt;span class="s"&gt;"file"&lt;/span&gt;
+		      &lt;span class="ss"&gt;:name&lt;/span&gt; &lt;span class="s"&gt;"foo"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+	      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:input&lt;/span&gt; &lt;span class="ss"&gt;:type&lt;/span&gt; &lt;span class="s"&gt;"submit"&lt;/span&gt;&lt;span class="p"&gt;))))))))&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:post&lt;/span&gt;
+     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nv"&gt;req&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;lack.request:make-request&lt;/span&gt; &lt;span class="nv"&gt;env&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt; &lt;span class="c1"&gt;; The lack request builder will get the&lt;/span&gt;
+       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="nv"&gt;env&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;				  &lt;span class="c1"&gt;; body parameters for us&lt;/span&gt;
+       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;destructuring-bind&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;stream&lt;/span&gt; &lt;span class="nv"&gt;fname&lt;/span&gt; &lt;span class="nv"&gt;content-type&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+	   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cdr&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;assoc&lt;/span&gt; &lt;span class="s"&gt;"foo"&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;lack.request:request-body-parameters&lt;/span&gt; &lt;span class="nv"&gt;req&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ss"&gt;:test&lt;/span&gt; &lt;span class="nf"&gt;#'&lt;/span&gt;&lt;span class="nb"&gt;equal&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+	 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;and&lt;/span&gt;
+		&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;typep&lt;/span&gt; &lt;span class="nc"&gt;stream&lt;/span&gt; &lt;span class="ss"&gt;'file-stream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+		&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;probe-file&lt;/span&gt; &lt;span class="nc"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+	   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;delete-file&lt;/span&gt; &lt;span class="nc"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;	&lt;span class="c1"&gt;; see https://github.com/fukamachi/smart-buffer/issues/1&lt;/span&gt;
+	 &lt;span class="o"&gt;`&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+	   &lt;span class="mi"&gt;200&lt;/span&gt;
+	   &lt;span class="no"&gt;nil&lt;/span&gt;
+	   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;format&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt; &lt;span class="s"&gt;"~S ~S ~S ~S~%"&lt;/span&gt; &lt;span class="nv"&gt;env&lt;/span&gt; &lt;span class="nc"&gt;stream&lt;/span&gt; &lt;span class="nv"&gt;fname&lt;/span&gt; &lt;span class="nv"&gt;content-type&lt;/span&gt;&lt;span class="p"&gt;))))))))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>clack</category><guid>https://jasom.github.io/clack-tutorial/posts/clack-file-upoad/</guid><pubDate>Fri, 14 May 2021 05:08:54 GMT</pubDate></item><item><title>Getting started with clack</title><link>https://jasom.github.io/clack-tutorial/posts/getting-started-with-clack/</link><dc:creator>Jason Miller</dc:creator><description>&lt;p&gt;
 Clack is a very simple framework for unifying the different lisp web
 application servers.  However there isn't a lot of documentation for
 it.  This page hopes to address this.
 &lt;/p&gt;
 
-&lt;div id="outline-container-orga52465a" class="outline-2"&gt;
-&lt;h2 id="orga52465a"&gt;Annotated examples of usage&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-orga52465a"&gt;
+&lt;div id="outline-container-org553d171" class="outline-2"&gt;
+&lt;h2 id="org553d171"&gt;Annotated examples of usage&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-org553d171"&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-orgcc3e6a8" class="outline-3"&gt;
-&lt;h3 id="orgcc3e6a8"&gt;Formatting&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-orgcc3e6a8"&gt;
+&lt;div id="outline-container-org7abf068" class="outline-3"&gt;
+&lt;h3 id="org7abf068"&gt;Formatting&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org7abf068"&gt;
 &lt;p&gt;
 All input and output are presented in monospaced preformatted blocks.
 The color indicates what sort they are:
@@ -39,14 +66,14 @@ Output from running commands has a yellow background; do not type this
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org67a61cc" class="outline-3"&gt;
-&lt;h3 id="org67a61cc"&gt;Load dependencies used in examples:&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-org67a61cc"&gt;
+&lt;div id="outline-container-org73f0f02" class="outline-3"&gt;
+&lt;h3 id="org73f0f02"&gt;Load dependencies used in examples:&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org73f0f02"&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;ql:quickload&lt;/span&gt; &lt;span class="o"&gt;'&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;clack&lt;/span&gt; &lt;span class="nv"&gt;alexandria&lt;/span&gt; &lt;span class="nv"&gt;optima&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;use-package&lt;/span&gt; &lt;span class="ss"&gt;:optima&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;pre class="example" id="org01c955d"&gt;
+&lt;pre class="example"&gt;
 To load "clack":
   Load 1 ASDF system:
     clack
@@ -66,9 +93,9 @@ To load "optima":
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-orgf91a6dd" class="outline-3"&gt;
-&lt;h3 id="orgf91a6dd"&gt;Start a simple server&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-orgf91a6dd"&gt;
+&lt;div id="outline-container-org57c9b46" class="outline-3"&gt;
+&lt;h3 id="org57c9b46"&gt;Start a simple server&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org57c9b46"&gt;
 &lt;p&gt;
 The only required argument for &lt;code&gt;clackup&lt;/code&gt; is the application; the
 simplest form of the application is a function of one argument.
@@ -108,17 +135,17 @@ Hello, World!
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org66fa35f" class="outline-3"&gt;
-&lt;h3 id="org66fa35f"&gt;Stop the server&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-org66fa35f"&gt;
+&lt;div id="outline-container-org5c5c854" class="outline-3"&gt;
+&lt;h3 id="org5c5c854"&gt;Stop the server&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org5c5c854"&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;clack:stop&lt;/span&gt; &lt;span class="vg"&gt;*clack-server*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org19601ab" class="outline-3"&gt;
-&lt;h3 id="org19601ab"&gt;Redefining the handler&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-org19601ab"&gt;
+&lt;div id="outline-container-org57ecf2c" class="outline-3"&gt;
+&lt;h3 id="org57ecf2c"&gt;Redefining the handler&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-org57ecf2c"&gt;
 &lt;p&gt;
 It's a bit of a pain to have to restart the server all the time, let's make a redefinable handler:
 &lt;/p&gt;
@@ -243,17 +270,17 @@ Path /baz/quux not found
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org3f902e5" class="outline-2"&gt;
-&lt;h2 id="org3f902e5"&gt;Public API&lt;/h2&gt;
-&lt;div class="outline-text-2" id="text-org3f902e5"&gt;
+&lt;div id="outline-container-orga2245f0" class="outline-2"&gt;
+&lt;h2 id="orga2245f0"&gt;Public API&lt;/h2&gt;
+&lt;div class="outline-text-2" id="text-orga2245f0"&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-org9449be7" class="outline-3"&gt;
-&lt;h3 id="org9449be7"&gt;CLACK:CLACKUP&lt;/h3&gt;
-&lt;div class="outline-text-3" id="text-org9449be7"&gt;
+&lt;div id="outline-container-orgaf2c874" class="outline-3"&gt;
+&lt;h3 id="orgaf2c874"&gt;CLACK:CLACKUP&lt;/h3&gt;
+&lt;div class="outline-text-3" id="text-orgaf2c874"&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-orgc021494" class="outline-4"&gt;
-&lt;h4 id="orgc021494"&gt;Syntax:&lt;/h4&gt;
-&lt;div class="outline-text-4" id="text-orgc021494"&gt;
+&lt;div id="outline-container-org1fd8fed" class="outline-4"&gt;
+&lt;h4 id="org1fd8fed"&gt;Syntax:&lt;/h4&gt;
+&lt;div class="outline-text-4" id="text-org1fd8fed"&gt;
 &lt;p&gt;
 &lt;b&gt;clackup&lt;/b&gt; &lt;i&gt;app&lt;/i&gt; &lt;i&gt;&amp;amp;key&lt;/i&gt; &lt;i&gt;server&lt;/i&gt; &lt;i&gt;port&lt;/i&gt; &lt;i&gt;debug&lt;/i&gt; &lt;i&gt;silent&lt;/i&gt;
 &lt;i&gt;use-thread&lt;/i&gt; &lt;i&gt;use-default-middlewares&lt;/i&gt; &lt;i&gt;&amp;amp;allow-other-keys&lt;/i&gt;
@@ -265,32 +292,32 @@ Path /baz/quux not found
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="outline-container-org94450af" class="outline-4"&gt;
-&lt;h4 id="org94450af"&gt;Arguments and Values:&lt;/h4&gt;
-&lt;div class="outline-text-4" id="text-org94450af"&gt;
+&lt;div id="outline-container-org0ceb397" class="outline-4"&gt;
+&lt;h4 id="org0ceb397"&gt;Arguments and Values:&lt;/h4&gt;
+&lt;div class="outline-text-4" id="text-org0ceb397"&gt;
 &lt;/div&gt;
 &lt;ul class="org-ul"&gt;
-&lt;li&gt;&lt;a id="orgf5150b9"&gt;&lt;/a&gt;&lt;i&gt;app&lt;/i&gt;–A &lt;i&gt;designator&lt;/i&gt; for a &lt;i&gt;function&lt;/i&gt; of one argument;or a subclass of &lt;code&gt;lack.component:lack-component&lt;/code&gt;;or a &lt;i&gt;pathname&lt;/i&gt;; or a &lt;i&gt;string&lt;/i&gt;.&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="org5a5a47d"&gt;&lt;/a&gt;&lt;i&gt;app&lt;/i&gt;–A &lt;i&gt;designator&lt;/i&gt; for a &lt;i&gt;function&lt;/i&gt; of one argument;or a subclass of &lt;code&gt;lack.component:lack-component&lt;/code&gt;;or a &lt;i&gt;pathname&lt;/i&gt;; or a &lt;i&gt;string&lt;/i&gt;.&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org51e1c92"&gt;&lt;/a&gt;&lt;i&gt;server&lt;/i&gt;–A symbol.  The default is &lt;code&gt;:hunchentoot&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="orgae5ea00"&gt;&lt;/a&gt;&lt;i&gt;server&lt;/i&gt;–A symbol.  The default is &lt;code&gt;:hunchentoot&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org53ca9e8"&gt;&lt;/a&gt;&lt;i&gt;port&lt;/i&gt;–An integer.  The default is 5000&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="org0d80dbd"&gt;&lt;/a&gt;&lt;i&gt;port&lt;/i&gt;–An integer.  The default is 5000&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org98f2b6a"&gt;&lt;/a&gt;&lt;i&gt;debug&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="org314220e"&gt;&lt;/a&gt;&lt;i&gt;debug&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org5e1d097"&gt;&lt;/a&gt;&lt;i&gt;silent&lt;/i&gt;–A boolean.  The default is &lt;code&gt;nil&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="orgf77bb28"&gt;&lt;/a&gt;&lt;i&gt;silent&lt;/i&gt;–A boolean.  The default is &lt;code&gt;nil&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org0abacf6"&gt;&lt;/a&gt;&lt;i&gt;use-thread&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt; on systems that support threading and &lt;code&gt;nil&lt;/code&gt; otherwise.&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="org41c01bc"&gt;&lt;/a&gt;&lt;i&gt;use-thread&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt; on systems that support threading and &lt;code&gt;nil&lt;/code&gt; otherwise.&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="orgfea98c9"&gt;&lt;/a&gt;&lt;i&gt;use-default-middlewares&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="orgc1f5857"&gt;&lt;/a&gt;&lt;i&gt;use-default-middlewares&lt;/i&gt;–A boolean.  The default is &lt;code&gt;t&lt;/code&gt;&lt;br&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;a id="org12b10a3"&gt;&lt;/a&gt;&lt;i&gt;handler&lt;/i&gt;–A clack.handler::handler.&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id="orge99d394"&gt;&lt;/a&gt;&lt;i&gt;handler&lt;/i&gt;–A clack.handler::handler.&lt;br&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 
-&lt;div id="outline-container-org281e5b2" class="outline-4"&gt;
-&lt;h4 id="org281e5b2"&gt;Description:&lt;/h4&gt;
-&lt;div class="outline-text-4" id="text-org281e5b2"&gt;
+&lt;div id="outline-container-orgcb1efde" class="outline-4"&gt;
+&lt;h4 id="orgcb1efde"&gt;Description:&lt;/h4&gt;
+&lt;div class="outline-text-4" id="text-orgcb1efde"&gt;
 &lt;p&gt;
 &lt;code&gt;clackup&lt;/code&gt; starts a server using the backend designated by &lt;i&gt;server&lt;/i&gt; on
 port &lt;i&gt;port&lt;/i&gt;.

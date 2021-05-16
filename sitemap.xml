@@ -7,26 +7,38 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://jasom.github.io/clack-tutorial/</loc>
-  <lastmod>2021-02-09T09:28:00Z</lastmod>
+  <lastmod>2021-05-16T05:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://jasom.github.io/clack-tutorial/2017/</loc>
-  <lastmod>2021-02-09T09:28:00Z</lastmod>
+  <lastmod>2021-05-16T05:16:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://jasom.github.io/clack-tutorial/2021/</loc>
+  <lastmod>2021-05-16T05:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://jasom.github.io/clack-tutorial/archive.html</loc>
-  <lastmod>2021-02-09T09:28:00Z</lastmod>
+  <lastmod>2021-05-16T05:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://jasom.github.io/clack-tutorial/categories/</loc>
-  <lastmod>2021-02-09T09:28:00Z</lastmod>
+  <lastmod>2021-05-16T05:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://jasom.github.io/clack-tutorial/categories/cat_posts/</loc>
-  <lastmod>2021-02-09T09:28:00Z</lastmod>
+  <lastmod>2021-05-16T05:16:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://jasom.github.io/clack-tutorial/categories/clack/</loc>
+  <lastmod>2021-05-16T05:16:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://jasom.github.io/clack-tutorial/posts/clack-file-upoad/</loc>
+  <lastmod>2021-05-16T05:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://jasom.github.io/clack-tutorial/posts/getting-started-with-clack/</loc>
-  <lastmod>2021-02-09T09:28:00Z</lastmod>
+  <lastmod>2021-05-16T05:16:00Z</lastmod>
  </url>
 </urlset>

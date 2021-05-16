@@ -1,0 +1,41 @@
+#+BEGIN_COMMENT
+.. title: Clack File Uploads
+.. slug: clack-file-upoad
+.. date: 2021-05-13T22:08:54-07:00
+.. tags: clack
+.. category: 
+.. link: 
+.. description: 
+.. type: text
+#+END_COMMENT
+
+#+BEGIN_SRC lisp :exports code
+(defun upload-demo (env)
+  (case (getf env :request-method)
+    (:get
+     `(
+       200
+       nil
+       (,(cl-who:with-html-output-to-string (s)
+	   (:html
+	    (:body
+	     (:form :method "post"	           ; Any combination other than post & multipart/form-data
+		    :enctype "multipart/form-data" ; causes the browser to just send the filename
+	      (:input :type "file"
+		      :name "foo")
+	      (:input :type "submit"))))))))
+    (:post
+     (let ((req (lack.request:make-request env))) ; The lack request builder will get the
+       (print env)				  ; body parameters for us
+       (destructuring-bind (stream fname content-type)
+	   (cdr (assoc "foo" (lack.request:request-body-parameters req) :test #'equal))
+	 (when (and
+		(typep stream 'file-stream)
+		(probe-file stream))
+	   (delete-file stream))	; see https://github.com/fukamachi/smart-buffer/issues/1
+	 `(
+	   200
+	   nil
+	   (,(format nil "~S ~S ~S ~S~%" env stream fname content-type))))))))
+
+#+END_SRC

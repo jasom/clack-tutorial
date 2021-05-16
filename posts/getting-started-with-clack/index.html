@@ -11,6 +11,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
 <link rel="canonical" href="https://jasom.github.io/clack-tutorial/posts/getting-started-with-clack/">
 <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Jason Miller">
+<link rel="next" href="../clack-file-upoad/" title="Clack File Uploads" type="text/html">
 <meta property="og:site_name" content="Clack Tutorial">
 <meta property="og:title" content="Getting started with clack">
 <meta property="og:url" content="https://jasom.github.io/clack-tutorial/posts/getting-started-with-clack/">
@@ -103,13 +104,13 @@ application servers.  However there isn't a lot of documentation for
 it.  This page hopes to address this.
 </p>
 
-<div id="outline-container-orga52465a" class="outline-2">
-<h2 id="orga52465a">Annotated examples of usage</h2>
-<div class="outline-text-2" id="text-orga52465a">
+<div id="outline-container-org553d171" class="outline-2">
+<h2 id="org553d171">Annotated examples of usage</h2>
+<div class="outline-text-2" id="text-org553d171">
 </div>
-<div id="outline-container-orgcc3e6a8" class="outline-3">
-<h3 id="orgcc3e6a8">Formatting</h3>
-<div class="outline-text-3" id="text-orgcc3e6a8">
+<div id="outline-container-org7abf068" class="outline-3">
+<h3 id="org7abf068">Formatting</h3>
+<div class="outline-text-3" id="text-org7abf068">
 <p>
 All input and output are presented in monospaced preformatted blocks.
 The color indicates what sort they are:
@@ -137,14 +138,14 @@ Output from running commands has a yellow background; do not type this
 </div>
 </div>
 
-<div id="outline-container-org67a61cc" class="outline-3">
-<h3 id="org67a61cc">Load dependencies used in examples:</h3>
-<div class="outline-text-3" id="text-org67a61cc">
+<div id="outline-container-org73f0f02" class="outline-3">
+<h3 id="org73f0f02">Load dependencies used in examples:</h3>
+<div class="outline-text-3" id="text-org73f0f02">
 <div class="highlight"><pre><span></span>   <span class="p">(</span><span class="nv">ql:quickload</span> <span class="o">'</span><span class="p">(</span><span class="nv">clack</span> <span class="nv">alexandria</span> <span class="nv">optima</span><span class="p">))</span>
    <span class="p">(</span><span class="nb">use-package</span> <span class="ss">:optima</span><span class="p">)</span>
 </pre></div>
 
-<pre class="example" id="org01c955d">
+<pre class="example">
 To load "clack":
   Load 1 ASDF system:
     clack
@@ -164,9 +165,9 @@ To load "optima":
 </div>
 </div>
 
-<div id="outline-container-orgf91a6dd" class="outline-3">
-<h3 id="orgf91a6dd">Start a simple server</h3>
-<div class="outline-text-3" id="text-orgf91a6dd">
+<div id="outline-container-org57c9b46" class="outline-3">
+<h3 id="org57c9b46">Start a simple server</h3>
+<div class="outline-text-3" id="text-org57c9b46">
 <p>
 The only required argument for <code>clackup</code> is the application; the
 simplest form of the application is a function of one argument.
@@ -206,17 +207,17 @@ Hello, World!
 </div>
 </div>
 
-<div id="outline-container-org66fa35f" class="outline-3">
-<h3 id="org66fa35f">Stop the server</h3>
-<div class="outline-text-3" id="text-org66fa35f">
+<div id="outline-container-org5c5c854" class="outline-3">
+<h3 id="org5c5c854">Stop the server</h3>
+<div class="outline-text-3" id="text-org5c5c854">
 <div class="highlight"><pre><span></span>     <span class="p">(</span><span class="nv">clack:stop</span> <span class="vg">*clack-server*</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 
-<div id="outline-container-org19601ab" class="outline-3">
-<h3 id="org19601ab">Redefining the handler</h3>
-<div class="outline-text-3" id="text-org19601ab">
+<div id="outline-container-org57ecf2c" class="outline-3">
+<h3 id="org57ecf2c">Redefining the handler</h3>
+<div class="outline-text-3" id="text-org57ecf2c">
 <p>
 It's a bit of a pain to have to restart the server all the time, let's make a redefinable handler:
 </p>
@@ -341,17 +342,17 @@ Path /baz/quux not found
 </div>
 </div>
 
-<div id="outline-container-org3f902e5" class="outline-2">
-<h2 id="org3f902e5">Public API</h2>
-<div class="outline-text-2" id="text-org3f902e5">
+<div id="outline-container-orga2245f0" class="outline-2">
+<h2 id="orga2245f0">Public API</h2>
+<div class="outline-text-2" id="text-orga2245f0">
 </div>
-<div id="outline-container-org9449be7" class="outline-3">
-<h3 id="org9449be7">CLACK:CLACKUP</h3>
-<div class="outline-text-3" id="text-org9449be7">
+<div id="outline-container-orgaf2c874" class="outline-3">
+<h3 id="orgaf2c874">CLACK:CLACKUP</h3>
+<div class="outline-text-3" id="text-orgaf2c874">
 </div>
-<div id="outline-container-orgc021494" class="outline-4">
-<h4 id="orgc021494">Syntax:</h4>
-<div class="outline-text-4" id="text-orgc021494">
+<div id="outline-container-org1fd8fed" class="outline-4">
+<h4 id="org1fd8fed">Syntax:</h4>
+<div class="outline-text-4" id="text-org1fd8fed">
 <p>
 <b>clackup</b> <i>app</i> <i>&amp;key</i> <i>server</i> <i>port</i> <i>debug</i> <i>silent</i>
 <i>use-thread</i> <i>use-default-middlewares</i> <i>&amp;allow-other-keys</i>
@@ -363,48 +364,48 @@ Path /baz/quux not found
 </p>
 </div>
 </div>
-<div id="outline-container-org94450af" class="outline-4">
-<h4 id="org94450af">Arguments and Values:</h4>
-<div class="outline-text-4" id="text-org94450af">
+<div id="outline-container-org0ceb397" class="outline-4">
+<h4 id="org0ceb397">Arguments and Values:</h4>
+<div class="outline-text-4" id="text-org0ceb397">
 </div>
 <ul class="org-ul">
 <li>
-<a id="orgf5150b9"></a><i>app</i>–A <i>designator</i> for a <i>function</i> of one argument;or a subclass of <code>lack.component:lack-component</code>;or a <i>pathname</i>; or a <i>string</i>.<br>
+<a id="org5a5a47d"></a><i>app</i>–A <i>designator</i> for a <i>function</i> of one argument;or a subclass of <code>lack.component:lack-component</code>;or a <i>pathname</i>; or a <i>string</i>.<br>
 </li>
 
 <li>
-<a id="org51e1c92"></a><i>server</i>–A symbol.  The default is <code>:hunchentoot</code><br>
+<a id="orgae5ea00"></a><i>server</i>–A symbol.  The default is <code>:hunchentoot</code><br>
 </li>
 
 <li>
-<a id="org53ca9e8"></a><i>port</i>–An integer.  The default is 5000<br>
+<a id="org0d80dbd"></a><i>port</i>–An integer.  The default is 5000<br>
 </li>
 
 <li>
-<a id="org98f2b6a"></a><i>debug</i>–A boolean.  The default is <code>t</code><br>
+<a id="org314220e"></a><i>debug</i>–A boolean.  The default is <code>t</code><br>
 </li>
 
 <li>
-<a id="org5e1d097"></a><i>silent</i>–A boolean.  The default is <code>nil</code><br>
+<a id="orgf77bb28"></a><i>silent</i>–A boolean.  The default is <code>nil</code><br>
 </li>
 
 <li>
-<a id="org0abacf6"></a><i>use-thread</i>–A boolean.  The default is <code>t</code> on systems that support threading and <code>nil</code> otherwise.<br>
+<a id="org41c01bc"></a><i>use-thread</i>–A boolean.  The default is <code>t</code> on systems that support threading and <code>nil</code> otherwise.<br>
 </li>
 
 <li>
-<a id="orgfea98c9"></a><i>use-default-middlewares</i>–A boolean.  The default is <code>t</code><br>
+<a id="orgc1f5857"></a><i>use-default-middlewares</i>–A boolean.  The default is <code>t</code><br>
 </li>
 
 <li>
-<a id="org12b10a3"></a><i>handler</i>–A clack.handler::handler.<br>
+<a id="orge99d394"></a><i>handler</i>–A clack.handler::handler.<br>
 </li>
 </ul>
 </div>
 
-<div id="outline-container-org281e5b2" class="outline-4">
-<h4 id="org281e5b2">Description:</h4>
-<div class="outline-text-4" id="text-org281e5b2">
+<div id="outline-container-orgcb1efde" class="outline-4">
+<h4 id="orgcb1efde">Description:</h4>
+<div class="outline-text-4" id="text-orgcb1efde">
 <p>
 <code>clackup</code> starts a server using the backend designated by <i>server</i> on
 port <i>port</i>.
@@ -447,7 +448,11 @@ backend specific, but typically will handle all errors in the body of
 </div>
 </div>
     </div>
-    <aside class="postpromonav"><nav></nav></aside></article><!--End of body content--><footer id="footer">
+    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+<li class="next">
+                <a href="../clack-file-upoad/" rel="next" title="Clack File Uploads">Next post</a>
+            </li>
+        </ul></nav></aside></article><!--End of body content--><footer id="footer">
             Contents © 2021         <a href="mailto:jasom@fastmail.com">Jason Miller</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
             
             
