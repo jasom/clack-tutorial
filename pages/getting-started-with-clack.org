@@ -2,7 +2,7 @@
 .. title: Getting started with clack
 .. slug: getting-started-with-clack
 .. date: 2017-03-26 23:36:28 UTC-07:00
-.. tags: 
+.. tags:
 .. category: 
 .. link: 
 .. description: 
